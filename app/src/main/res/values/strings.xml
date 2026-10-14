@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">MiAgenda</string>
+    <string name="app_name">Mi Agenda</string>
+
+    <string name="contacts">Total Contactos: </string>
+    <!-- Placeholder para ver como queda -->
+    <string name="nº_contacts">600</string>
+
+    <string name="last_contact_text">Último contacto: </string>
+    <!-- Placeholder para ver como queda -->
+    <string name="last_contact">Juan Pérez</string>
+
+    <string name="add_contact">Añadir Contacto</string>
+    <string name="only_favourites">Solo favoritos</string>"
 </resources>
