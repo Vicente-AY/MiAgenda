@@ -42,7 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nº_contacts"
-            android:paddingRight="10sp"
+            android:paddingStart="0sp"
+            android:paddingEnd="10sp"
         />
 
         <TextView
@@ -50,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_contact_text"
-            android:paddingLeft="10sp"
-            android:paddingRight="5sp"
+            android:paddingStart="10sp"
+            android:paddingEnd="5sp"
         />
         <TextView
             android:id="@+id/lastContact"
@@ -82,7 +83,8 @@
             android:id="@+id/only_favourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/only_favourites"
+            android:textOff="@string/all_contacts"
+            android:textOn="@string/only_favourites"
             android:textSize="15sp"
             android:textStyle="bold"
             android:checked="false"

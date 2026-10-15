@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Strings de activity_main -->
     <string name="app_name">Mi Agenda</string>
 
     <string name="contacts">Total Contactos: </string>
@@ -9,6 +11,24 @@
     <!-- Placeholder para ver como queda -->
     <string name="last_contact">Juan Pérez</string>
 
+    <!-- Strings de botones de la activity_main-->
     <string name="add_contact">Añadir Contacto</string>
-    <string name="only_favourites">Solo favoritos</string>"
+    <string name="only_favourites">Solo favoritos</string>
+    <string name="all_contacts">Todos los contactos</string>"
+
+
+
+    <!-- Strings de activity_contacto_form -->
+    <string name="add_contact_form_title">Añadir Contacto</string>
+    <string name="name">Nombre: </string>
+    <string name="phone">Teléfono: </string>
+    <string name="email">Email: (opcional)</string>
+
+    <!-- String de Toggle de favorito -->
+    <string name="favourite">Favorito</string>
+    <string name="no_favourite">No favorito</string>
+
+    <!-- Strings de botones de la activity_contacto_form-->
+    <string name="btn_accept">Aceptar</string>
+    <string name="btn_cancel">Cancelar</string>
 </resources>
