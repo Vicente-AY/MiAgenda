@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Andreu Buenafuente Romero Tomás de Aqui no hay quien viva en una isla del pacifico norte"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/itemPhone"
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+
+    <TextView
+        android:id="@+id/itemPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="600000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/itemName"
+        app:layout_constraintTop_toTopOf="@+id/itemName"
+    />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
 
     <string name="contacts">Total Contactos: </string>
     <!-- Placeholder para ver como queda -->
-    <string name="nº_contacts">600</string>
+    <string name="contacts_count">600</string>
 
     <string name="last_contact_text">Último contacto: </string>
     <!-- Placeholder para ver como queda -->

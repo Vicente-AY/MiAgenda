@@ -20,13 +20,13 @@
     />
 
     <LinearLayout
+        android:id="@+id/infoLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        android:textSize="15sp"
-        android:layout_margin="10sp"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -34,16 +34,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contacts"
-            android:padding="5sp"
+            android:padding="5dp"
+            android:textSize="15sp"
         />
         <!-- Placeholder a cambiar cuando se carguen los datos -->
         <TextView
-            android:id="@+id/nº_contactos"
+            android:id="@+id/contacts_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nº_contacts"
-            android:paddingStart="0sp"
-            android:paddingEnd="10sp"
+            android:text="@string/contacts_count"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
+            android:textSize="15sp"
         />
 
         <TextView
@@ -51,19 +53,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_contact_text"
-            android:paddingStart="10sp"
-            android:paddingEnd="5sp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:textSize="15sp"
         />
         <TextView
             android:id="@+id/lastContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_contact"
+            android:textSize="15sp"
         />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/buttonsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/title"
@@ -77,7 +82,7 @@
             android:text="@string/add_contact"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
         />
         <ToggleButton
             android:id="@+id/only_favourites"
@@ -88,9 +93,18 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:checked="false"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
         />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerContacts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/infoLayout"
+        app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
