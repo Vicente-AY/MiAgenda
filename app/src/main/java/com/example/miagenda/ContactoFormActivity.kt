@@ -1,6 +1,7 @@
 package com.example.miagenda
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +16,13 @@ class ContactoFormActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val btnAccept = findViewById<Button>(R.id.btnAccept);
+        val btnCancel = findViewById<Button>(R.id.btnCancel);
+
+        btnCancel.setOnClickListener {
+            finish();
         }
     }
 }
