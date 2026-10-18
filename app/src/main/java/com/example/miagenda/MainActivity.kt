@@ -1,7 +1,9 @@
 package com.example.miagenda
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,5 +39,12 @@ class MainActivity : AppCompatActivity() {
 
         recycler.adapter = adapter;
 
+
+        val btnAñadir = findViewById<Button>(R.id.addContact);
+
+        btnAñadir.setOnClickListener {
+            val intent = Intent(this, ContactoFormActivity::class.java);
+            startActivity(intent);
+        }
     }
 }

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContactoFormActivity">
+    tools:context=".ContactoFormActivity"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/title"
@@ -21,76 +22,72 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/name_input"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/name"
-        android:layout_marginTop="50dp"
     />
     <EditText
         android:id="@+id/name_input"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/name_example"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintStart_toEndOf="@id/name"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
-        android:paddingStart="200dp"
-        android:paddingEnd="0dp"
-
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"
     />
 
     <TextView
         android:id="@+id/phone"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="@string/phone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        android:paddingTop="20dp"
-        />
+        app:layout_constraintBaseline_toBaselineOf="@+id/phone_input"
+    />
     <EditText
         android:id="@+id/phone_input"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:inputType="phone"
+        android:hint="@string/phone_example"
+        app:layout_constraintTop_toBottomOf="@+id/name_input"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/phone"
-        android:layout_marginStart="5sp"
-        android:paddingStart="200dp"
-        android:paddingEnd="0dp"
-        />
+    />
 
     <TextView
         android:id="@+id/email"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/email_input"
         android:text="@string/email"
-        android:paddingTop="20dp"
     />
     <EditText
         android:id="@+id/email_input"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/phone"
-        android:layout_marginStart="5dp"
-        android:paddingStart="200dp"
-        android:paddingEnd="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/phone_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email_example"
     />
 
-    <ToggleButton
+    <CheckBox
         android:id="@+id/favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="@string/no_favourite"
-        android:textOn="@string/favourite"
+        android:text="@string/favourite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/email_input"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
     />
 
     <Button
@@ -99,12 +96,11 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_accept"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnCancel"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/favourite"
-
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="100dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
     />
     <Button
         android:id="@+id/btnCancel"
@@ -113,7 +109,8 @@
         android:text="@string/btn_cancel"
         app:layout_constraintStart_toEndOf="@+id/btnAccept"
         app:layout_constraintTop_toTopOf="@+id/btnAccept"
-        android:layout_marginStart="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
     />
 
 

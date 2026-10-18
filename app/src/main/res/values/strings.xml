@@ -19,10 +19,17 @@
 
 
     <!-- Strings de activity_contacto_form -->
+    <!-- Title-->
     <string name="add_contact_form_title">Añadir Contacto</string>
+    <!-- Name -->
     <string name="name">Nombre: </string>
+    <string name="name_example">Luis Pérez</string>
+    <!-- Phone -->
     <string name="phone">Teléfono: </string>
+    <string name="phone_example">6325784715</string>
+    <!-- Email -->
     <string name="email">Email: (opcional)</string>
+    <string name="email_example">name@mail.com</string>
 
     <!-- String de Toggle de favorito -->
     <string name="favourite">Favorito</string>
