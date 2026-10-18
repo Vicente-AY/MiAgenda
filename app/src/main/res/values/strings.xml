@@ -38,4 +38,9 @@
     <!-- Strings de botones de la activity_contacto_form-->
     <string name="btn_accept">Aceptar</string>
     <string name="btn_cancel">Cancelar</string>
+
+    <!-- Strings de error a la hora de rellenar el formulario-->
+    <string name="name_error">El nombre no puede estar vacío</string>
+    <string name="phone_error">El teléfono debe tener 9 dígitos</string>
+    <string name="email_error">El email no puede estar vacío</string>
 </resources>
