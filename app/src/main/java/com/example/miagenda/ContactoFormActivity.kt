@@ -1,5 +1,6 @@
 package com.example.miagenda
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -29,9 +30,9 @@ class ContactoFormActivity : AppCompatActivity() {
 
         btnAccept.setOnClickListener {
 
-            val nombre = campoNombre.text.toString();
+            val nombre = campoNombre.text.toString().trim();
             val telefono = campoTelefono.text.toString();
-            val email = campoEmail.text.toString();
+            val email = campoEmail.text.toString().trim();
             val favorito = findViewById<CheckBox>(R.id.favourite).isChecked();
 
             var correctForm = true;
@@ -49,11 +50,18 @@ class ContactoFormActivity : AppCompatActivity() {
 
 
             if(correctForm) {
-                Log.d("MiAgenda", "Formulario correcto: $nombre, $telefono, $email, $favorito")
 
+                val resultado = Intent();
 
-                //ContactoRepository.agregar(Contacto(nombre, telefono, email, favorito));
-                //finish();
+                resultado.putExtra("nombre", nombre);
+                resultado.putExtra("telefono", telefono);
+                resultado.putExtra("email", email.ifEmpty { null });
+                resultado.putExtra("favorito", favorito);
+                setResult(RESULT_OK, resultado);
+
+                Log.d("MiAgenda", "Contacto añadido $nombre $telefono $email $favorito")
+
+                finish();
             }
 
 

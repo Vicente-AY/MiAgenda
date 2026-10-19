@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,6 +16,24 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ContactoAdapter
+
+    private val launcherForumlario = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                val datos = resultado.data;
+
+                if(datos != null){
+                    val nombre = datos.getStringExtra("nombre") ?: "";
+                    val telefono = datos.getStringExtra("telefono") ?: "";
+                    val email = datos.getStringExtra("email");
+                    val favorito = datos.getBooleanExtra("favorito", false);
+
+                    ContactoRepository.agregar(Contacto(nombre, telefono, email, favorito));
+                    adapter.actualizar(ContactoRepository.obtenerTodos())
+                    actualizarContador()
+                }
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +45,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        ContactoRepository.agregar(Contacto("Anita", "600111222", null, true));
-        ContactoRepository.agregar(Contacto("Anota", "600111223", "luis@mail.com", false));
+
 
         Log.d("MiAgenda", "Total: ${ContactoRepository.obtenerTodos().size}");
         Log.d("MiAgenda", "Favortos: ${ContactoRepository.obtenerFavoritos().size}");
@@ -43,8 +62,16 @@ class MainActivity : AppCompatActivity() {
         val btnAñadir = findViewById<Button>(R.id.addContact);
 
         btnAñadir.setOnClickListener {
+
             val intent = Intent(this, ContactoFormActivity::class.java);
-            startActivity(intent);
+            launcherForumlario.launch(intent);
         }
+
+        actualizarContador();
+    }
+
+    private fun actualizarContador(){
+
+        findViewById<TextView>(R.id.contacts_count).text = ContactoRepository.obtenerTodos().size.toString();
     }
 }
