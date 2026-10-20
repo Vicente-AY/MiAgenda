@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.net.toUri
 import java.lang.System.out
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +34,16 @@ class MainActivity : AppCompatActivity() {
                     val favorito = datos.getBooleanExtra("favorito", false);
 
                     ContactoRepository.agregar(Contacto(nombre, telefono, email, favorito));
+
+                    getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
+                        putString(
+                            "ultimoContacto",
+                            nombre
+                        )
+                    };
+
+                    mostrarUltimoContacto()
+
                     refrescarLista()
                 }
             }
@@ -71,10 +82,11 @@ class MainActivity : AppCompatActivity() {
 
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
-        //soloFavoritos.isChecked = savedInstanceState?.getBoolean("soloFavoritos") ?: false;
         soloFavoritos.setOnCheckedChangeListener { _, _ ->
             refrescarLista();
         }
+
+        mostrarUltimoContacto()
     }
 
     private fun actualizarContador(){
@@ -104,5 +116,15 @@ class MainActivity : AppCompatActivity() {
 
         val interruptor = findViewById<ToggleButton>(R.id.only_favourites);
         outState.putBoolean("soloFavoritos", interruptor.isChecked());
+    }
+
+    private fun mostrarUltimoContacto(){
+
+        val prefs = getSharedPreferences("miagendaprefs", MODE_PRIVATE);
+
+        val nombre = prefs.getString("ultimoContacto", null);
+
+        findViewById<TextView>(R.id.lastContact).text = nombre ?: getString(R.string.no_last_contact);
+
     }
 }

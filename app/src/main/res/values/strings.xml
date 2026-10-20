@@ -7,7 +7,7 @@
 
     <string name="last_contact_text">Último contacto: </string>
     <!-- Placeholder para ver como queda -->
-    <string name="last_contact">Juan Pérez</string>
+    <string name="no_last_contact">Sin contactos</string>
 
     <!-- Strings de botones de la activity_main-->
     <string name="add_contact">Añadir Contacto</string>
