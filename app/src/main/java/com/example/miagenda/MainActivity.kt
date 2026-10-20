@@ -1,10 +1,12 @@
 package com.example.miagenda
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.core.net.toUri
+import java.lang.System.out
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,8 +33,7 @@ class MainActivity : AppCompatActivity() {
                     val favorito = datos.getBooleanExtra("favorito", false);
 
                     ContactoRepository.agregar(Contacto(nombre, telefono, email, favorito));
-                    adapter.actualizar(ContactoRepository.obtenerTodos())
-                    actualizarContador()
+                    refrescarLista()
                 }
             }
     }
@@ -45,19 +48,16 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
-
-        Log.d("MiAgenda", "Total: ${ContactoRepository.obtenerTodos().size}");
-        Log.d("MiAgenda", "Favortos: ${ContactoRepository.obtenerFavoritos().size}");
-
         val recycler = findViewById<RecyclerView>(R.id.recyclerContacts);
         recycler.layoutManager = LinearLayoutManager(this);
         adapter = ContactoAdapter(ContactoRepository.obtenerTodos()){ contacto ->
-            Log.d("MiAgenda", "Puldado: ${contacto.name} con telefono ${contacto.phone}")
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = "tel:${contacto.phone}".toUri()
+
+            startActivity(intent);
         }
 
         recycler.adapter = adapter;
-
 
         val btnAñadir = findViewById<Button>(R.id.addContact);
 
@@ -68,10 +68,41 @@ class MainActivity : AppCompatActivity() {
         }
 
         actualizarContador();
+
+        val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
+
+        //soloFavoritos.isChecked = savedInstanceState?.getBoolean("soloFavoritos") ?: false;
+        soloFavoritos.setOnCheckedChangeListener { _, _ ->
+            refrescarLista();
+        }
     }
 
     private fun actualizarContador(){
 
         findViewById<TextView>(R.id.contacts_count).text = ContactoRepository.obtenerTodos().size.toString();
+    }
+
+    private fun refrescarLista(){
+
+        val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
+
+        val lista: List<Contacto>
+
+        if(soloFavoritos.isChecked){
+            lista = ContactoRepository.obtenerFavoritos()
+        }
+        else{
+            lista = ContactoRepository.obtenerTodos()
+        }
+
+        adapter.actualizar(lista);
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle){
+        super.onSaveInstanceState(outState);
+
+        val interruptor = findViewById<ToggleButton>(R.id.only_favourites);
+        outState.putBoolean("soloFavoritos", interruptor.isChecked());
     }
 }
