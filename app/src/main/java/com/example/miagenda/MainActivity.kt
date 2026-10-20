@@ -127,4 +127,19 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.lastContact).text = nombre ?: getString(R.string.no_last_contact);
 
     }
+
+
+
+
+
+
+
+
+
+
+    override fun onStart() { super.onStart(); Log.d("MiAgenda", "MainActivity: onStart") }
+    override fun onResume() { super.onResume(); Log.d("MiAgenda", "MainActivity: onResume") }
+    override fun onPause() { super.onPause(); Log.d("MiAgenda", "MainActivity: onPause") }
+    override fun onStop() { super.onStop(); Log.d("MiAgenda", "MainActivity: onStop") }
+    override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "MainActivity: onDestroy") }
 }

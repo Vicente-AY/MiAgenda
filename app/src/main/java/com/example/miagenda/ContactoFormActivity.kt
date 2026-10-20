@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 class ContactoFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MiAgenda", "ContactoFormActivity: onCreate")
         enableEdgeToEdge()
         setContentView(R.layout.activity_contacto_form)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -80,4 +81,23 @@ class ContactoFormActivity : AppCompatActivity() {
 
         return telefono.length == 9 && telefono.all { it.isDigit() };
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    override fun onStart() { super.onStart(); Log.d("MiAgenda", "ContactoFormActivity: onStart") }
+    override fun onResume() { super.onResume(); Log.d("MiAgenda", "ContactoFormActivity: onResume") }
+    override fun onPause() { super.onPause(); Log.d("MiAgenda", "ContactoFormActivity: onPause") }
+    override fun onStop() { super.onStop(); Log.d("MiAgenda", "ContactoFormActivity: onStop") }
+    override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "ContactoFormActivity: onDestroy") }
 }
