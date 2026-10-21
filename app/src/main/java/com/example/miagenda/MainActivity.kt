@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                     mostrarUltimoContacto()
 
                     refrescarLista()
+                    actualizarContador()
                 }
             }
     }
