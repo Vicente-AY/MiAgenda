@@ -40,5 +40,5 @@
     <!-- Strings de error a la hora de rellenar el formulario-->
     <string name="name_error">El nombre no puede estar vacío</string>
     <string name="phone_error">El teléfono debe tener 9 dígitos</string>
-    <string name="email_error">El email no puede estar vacío</string>
+    <string name="email_error">El email no no tiene la Formato adecuado</string>
 </resources>

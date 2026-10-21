@@ -47,7 +47,11 @@ class ContactoFormActivity : AppCompatActivity() {
                 campoTelefono.error = getString(R.string.phone_error);
                 correctForm = false;
             }
-            //checkear correcto email o vacio
+
+            if(!checkEmail(email)){
+                campoEmail.error = getString(R.string.email_error);
+                correctForm = false;
+            }
 
 
             if(correctForm) {
@@ -80,6 +84,20 @@ class ContactoFormActivity : AppCompatActivity() {
     fun esTelefonoValido(telefono: String): Boolean{
 
         return telefono.length == 9 && telefono.all { it.isDigit() };
+    }
+
+    fun checkEmail(email: String): Boolean{
+
+        if(email.isEmpty()) return true;
+
+        var atIndex: Int = email.indexOf('@');
+        var dotIndex: Int = email.indexOf('.');
+
+        return atIndex > 0 && //arroba no es el primer caracter
+                dotIndex > atIndex + 1 && //punto esta despues que el arroba y deja un margen de 1 caracher
+                dotIndex < email.length - 2;//punto no es el ultimo caracter y deja un espacio de almenos 2 caracteres
+
+
     }
 
 
