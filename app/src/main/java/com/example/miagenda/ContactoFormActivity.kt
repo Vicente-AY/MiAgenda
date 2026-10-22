@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -69,14 +70,27 @@ class ContactoFormActivity : AppCompatActivity() {
                 finish();
             }
 
-
-
         }
-
 
         val btnCancel = findViewById<Button>(R.id.btnCancel);
 
         btnCancel.setOnClickListener {
+
+            if(!campoNombre.text.isEmpty() || !campoNombre.text.isEmpty() || !campoEmail.text.isEmpty()){
+
+                val cancelDialog = AlertDialog.Builder(this);
+                cancelDialog.setMessage("@strings/messageAlert")
+                    .setPositiveButton("@strings/discard"){ dialog, id ->
+                        finish();
+                        dialog.dismiss();
+                    }
+                    .setNegativeButton("@strings/cancel"){dialog , id ->
+                        dialog.dismiss();
+                    }
+
+                cancelDialog.show();
+            }
+
             finish();
         }
     }
