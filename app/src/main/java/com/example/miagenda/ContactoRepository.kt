@@ -18,4 +18,10 @@ object ContactoRepository {
 
         return contactos.filter{it.favorite}
     }
+
+    fun ordenarAlfabeticamente(): List<Contacto>{
+
+        return contactos.sortedBy { it.name }
+
+    }
 }

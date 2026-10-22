@@ -74,26 +74,27 @@ class ContactoFormActivity : AppCompatActivity() {
 
         val btnCancel = findViewById<Button>(R.id.btnCancel);
 
+
         btnCancel.setOnClickListener {
 
-            if(!campoNombre.text.isEmpty() || !campoNombre.text.isEmpty() || !campoEmail.text.isEmpty()){
+            val cancelDialogBuilder = AlertDialog.Builder(this);
 
-                val cancelDialog = AlertDialog.Builder(this);
-                cancelDialog.setMessage("@strings/messageAlert")
-                    .setPositiveButton("@strings/discard"){ dialog, id ->
-                        finish();
-                        dialog.dismiss();
-                    }
-                    .setNegativeButton("@strings/cancel"){dialog , id ->
-                        dialog.dismiss();
-                    }
+            cancelDialogBuilder.setMessage(R.string.message_alert)
+                .setPositiveButton(R.string.discard){ dialog, id ->
+                    finish();
+                    dialog.dismiss();
+                }
+                .setNegativeButton(R.string.cancel){dialog , id ->
+                    dialog.dismiss();
+                }
 
-                cancelDialog.show();
-            }
+            val cancelDialog: AlertDialog = cancelDialogBuilder.create();
 
-            finish();
+            cancelDialog.show();
+
         }
     }
+
 
     fun esTelefonoValido(telefono: String): Boolean{
 
@@ -114,22 +115,10 @@ class ContactoFormActivity : AppCompatActivity() {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "ContactoFormActivity: onStart") }
     override fun onResume() { super.onResume(); Log.d("MiAgenda", "ContactoFormActivity: onResume") }
     override fun onPause() { super.onPause(); Log.d("MiAgenda", "ContactoFormActivity: onPause") }
     override fun onStop() { super.onStop(); Log.d("MiAgenda", "ContactoFormActivity: onStop") }
     override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "ContactoFormActivity: onDestroy") }
+
 }

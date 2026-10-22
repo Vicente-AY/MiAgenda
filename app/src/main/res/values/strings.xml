@@ -41,4 +41,9 @@
     <string name="name_error">El nombre no puede estar vacío</string>
     <string name="phone_error">El teléfono debe tener 9 dígitos</string>
     <string name="email_error">El email no no tiene la Formato adecuado</string>
+
+    <!-- Strings de dialogo de alerta al puslar cancelar-->
+    <string name="message_alert">¿Quieres descartar el nuevo contacto?</string>"
+    <string name="discard">Descartar</string>"
+    <string name="cancel">Cancelar</string>
 </resources>
