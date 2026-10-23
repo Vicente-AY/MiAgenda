@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerContacts);
         recycler.layoutManager = LinearLayoutManager(this);
-        adapter = ContactoAdapter(ContactoRepository.obtenerTodos()){ contacto ->
+        adapter = ContactoAdapter(ContactoRepository.obtenerTodos(false)){ contacto ->
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = "tel:${contacto.phone}".toUri()
 
@@ -84,28 +84,40 @@ class MainActivity : AppCompatActivity() {
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
         soloFavoritos.setOnCheckedChangeListener { _, _ ->
+
             refrescarLista();
         }
 
+        val btnOrdenar = findViewById<ToggleButton>(R.id.sort);
+
+        btnOrdenar.setOnClickListener {
+
+            refrescarLista()
+
+        }
+
         mostrarUltimoContacto()
+
+        createPlaceholderData();
     }
 
     private fun actualizarContador(){
 
-        findViewById<TextView>(R.id.contacts_count).text = ContactoRepository.obtenerTodos().size.toString();
+        findViewById<TextView>(R.id.contacts_count).text = ContactoRepository.obtenerTodos(false).size.toString();
     }
 
     private fun refrescarLista(){
 
+        val ordenar = findViewById<ToggleButton>(R.id.sort)
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
         val lista: List<Contacto>
 
         if(soloFavoritos.isChecked){
-            lista = ContactoRepository.obtenerFavoritos()
+            lista = ContactoRepository.obtenerFavoritos(ordenar.isChecked)
         }
         else{
-            lista = ContactoRepository.obtenerTodos()
+            lista = ContactoRepository.obtenerTodos(ordenar.isChecked)
         }
 
         adapter.actualizar(lista);
@@ -126,6 +138,29 @@ class MainActivity : AppCompatActivity() {
         val nombre = prefs.getString("ultimoContacto", null);
 
         findViewById<TextView>(R.id.lastContact).text = nombre ?: getString(R.string.no_last_contact);
+
+    }
+
+    private fun createPlaceholderData(){
+
+        ContactoRepository.agregar(Contacto("A", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
+        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
+        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
 
     }
 

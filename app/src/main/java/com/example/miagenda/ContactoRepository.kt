@@ -1,5 +1,8 @@
 package com.example.miagenda
 
+import java.util.Locale
+import java.util.Locale.getDefault
+
 object ContactoRepository {
 
     private val contactos = mutableListOf<Contacto>();
@@ -9,19 +12,24 @@ object ContactoRepository {
         contactos.add(contacto);
     }
 
-    fun obtenerTodos(): List<Contacto> {
+    fun obtenerTodos(ordenar: Boolean): List<Contacto> {
 
-        return contactos.toList();
+        if(ordenar){
+            return contactos.sortedBy { it.name.lowercase() }
+        }
+        else{
+            return contactos.toList()
+        }
+
     }
 
-    fun obtenerFavoritos(): List<Contacto>{
+    fun obtenerFavoritos(ordenar: Boolean): List<Contacto>{
 
-        return contactos.filter{it.favorite}
-    }
-
-    fun ordenarAlfabeticamente(): List<Contacto>{
-
-        return contactos.sortedBy { it.name }
-
+        if(ordenar){
+            return contactos.filter{it.favorite}.sortedBy { it.name.lowercase() }
+        }
+        else{
+            return contactos.filter{it.favorite}
+        }
     }
 }
