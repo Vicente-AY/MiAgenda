@@ -33,7 +33,7 @@ class ContactoFormActivity : AppCompatActivity() {
         btnAccept.setOnClickListener {
 
             val nombre = campoNombre.text.toString().trim();
-            val telefono = campoTelefono.text.toString();
+            val telefono = campoTelefono.text.toString().trim();
             val email = campoEmail.text.toString().trim();
             val favorito = findViewById<CheckBox>(R.id.favourite).isChecked();
 

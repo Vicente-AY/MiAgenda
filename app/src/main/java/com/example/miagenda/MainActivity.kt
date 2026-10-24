@@ -155,17 +155,9 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this).setItems(items) { _, which ->
             when (which) {
-                0 -> {
-                    //enviar email
-                }
-
-                1 -> {
-                    //modificar contacto
-                }
-
-                2 -> {
-                    confirmarEliminarContacto(contacto);
-                }
+                0 -> enviarEmail(contacto);
+                1 -> ModificarContacto(contacto);
+                2 -> confirmarEliminarContacto(contacto);
             }
         }
         .show();
@@ -185,27 +177,55 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun ModificarContacto(contacto: Contacto) {
+
+
+
+    }
+
+    private fun enviarEmail(contacto: Contacto){
+
+        if(contacto.email == "" || contacto.email == null){
+
+            AlertDialog.Builder(this)
+                .setMessage(R.string.no_email_alert)
+                .setPositiveButton(R.string.accept) { dialog, _ ->
+                    dialog.dismiss();
+                }
+                .show();
+        }
+        else{
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = "mailto:${contacto.email}".toUri()
+
+            startActivity(intent);
+        }
+
+    }
+
     private fun createPlaceholderData(){
 
-        ContactoRepository.agregar(Contacto("A", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-        ContactoRepository.agregar(Contacto("nombre", "telefono", "email", true));
-        ContactoRepository.agregar(Contacto("Far", "123456789", "emilio", false));
-
+        ContactoRepository.agregar(Contacto("Carlos García", "612345678", "carlos@gmail.com", true))
+        ContactoRepository.agregar(Contacto("María López", "623456789", "maria@gmail.com", true))
+        ContactoRepository.agregar(Contacto("Juan Martínez", "634567890", "juan@gmail.com"))
+        ContactoRepository.agregar(Contacto("Ana Sánchez", "645678901", "ana@gmail.com", true))
+        ContactoRepository.agregar(Contacto("Pedro Fernández", "656789012", null))
+        ContactoRepository.agregar(Contacto("Laura González", "667890123", "laura@gmail.com", true))
+        ContactoRepository.agregar(Contacto("David Rodríguez", "678901234", "david@gmail.com"))
+        ContactoRepository.agregar(Contacto("Lucía Pérez", "689012345", "lucia@gmail.com"))
+        ContactoRepository.agregar(Contacto("Miguel Torres", "690123456", null, true))
+        ContactoRepository.agregar(Contacto("Sofía Ramírez", "601234567", "sofia@gmail.com"))
+        ContactoRepository.agregar(Contacto("Alejandro Jiménez", "611223344", "alejandro@gmail.com", true))
+        ContactoRepository.agregar(Contacto("Elena Ruiz", "622334455", "elena@gmail.com"))
+        ContactoRepository.agregar(Contacto("Pablo Moreno", "633445566", null))
+        ContactoRepository.agregar(Contacto("Claudia Muñoz", "644556677", "claudia@gmail.com", true))
+        ContactoRepository.agregar(Contacto("Javier Alonso", "655667788", "javier@gmail.com"))
+        ContactoRepository.agregar(Contacto("Isabel Romero", "666778899", "isabel@gmail.com"))
+        ContactoRepository.agregar(Contacto("Daniel Navarro", "677889900", null, true))
+        ContactoRepository.agregar(Contacto("Marta Iglesias", "688990011", "marta@gmail.com"))
+        ContactoRepository.agregar(Contacto("Adrián Castro", "699001122", "adrian@gmail.com", true))
+        ContactoRepository.agregar(Contacto("Paula Ortega", "600112233", "paula@gmail.com"))
+        refrescarLista()
     }
 
 

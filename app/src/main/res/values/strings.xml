@@ -23,6 +23,8 @@
     </string-array>
     <string name="delete_message_alert">¿Seguro que quieres Eliminar a </string>
     <string name="btn_delete">Eliminar</string>">
+    <string name="no_email_alert">El Contacto no tiene Email</string>
+    <string name="accept">Aceptar</string>
 
 
 

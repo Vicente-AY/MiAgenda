@@ -36,4 +36,12 @@ object ContactoRepository {
     fun eliminar(contacto: Contacto){
         contactos.remove(contacto);
     }
+
+    fun indiceDe(contacto: Contacto): Int{
+        return contactos.indexOf(contacto);
+    }
+
+    fun actualizar(contacto: Contacto, indice: Int){
+        contactos[indice] = contacto;
+    }
 }
