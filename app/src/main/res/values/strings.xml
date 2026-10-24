@@ -31,6 +31,8 @@
     <!-- Strings de activity_contacto_form -->
     <!-- Title-->
     <string name="add_contact_form_title">Añadir Contacto</string>
+    <string name="edit_contact_form_title">Modificar Contacto</string>
+
     <!-- Name -->
     <string name="name">Nombre: </string>
     <string name="name_example">Luis Pérez</string>

@@ -34,7 +34,21 @@ class MainActivity : AppCompatActivity() {
                     val email = datos.getStringExtra("email");
                     val favorito = datos.getBooleanExtra("favorito", false);
 
-                    ContactoRepository.agregar(Contacto(nombre, telefono, email, favorito));
+                    val indice = datos.getIntExtra("indice", -1)
+                    val contacto = Contacto(nombre, telefono, email, favorito);
+
+                    if(indice == -1){
+                        ContactoRepository.agregar(contacto);
+                        getSharedPreferences("miagenda_prefs", MODE_PRIVATE)
+                            .edit()
+                            .putString("ultimoContacto", nombre)
+                            .apply();
+                        mostrarUltimoContacto()
+                    }
+                    else{
+                        ContactoRepository.actualizar(contacto, indice);
+
+                    }
 
                     getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
                         putString(
@@ -64,18 +78,8 @@ class MainActivity : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.recyclerContacts);
         recycler.layoutManager = LinearLayoutManager(this);
 
-        adapter = ContactoAdapter(ContactoRepository.obtenerTodos(false),
-            { contacto ->
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = "tel:${contacto.phone}".toUri()
+        adapter = crearAdapter();
 
-                startActivity(intent);
-            },
-            {contacto ->
-                Log.d("MiAgenda", "MainActivity: Mostrar Menú Contextual")
-                mostarMenuContextual(contacto);
-            }
-        )
 
         recycler.adapter = adapter;
 
@@ -107,6 +111,27 @@ class MainActivity : AppCompatActivity() {
         mostrarUltimoContacto()
 
         createPlaceholderData();
+    }
+
+    private fun crearAdapter(): ContactoAdapter{
+        return ContactoAdapter(ContactoRepository.obtenerTodos(false),
+            { contacto ->
+                Log.d("MiAgenda", "Iniciando Llamada")
+                realizarLlamada(contacto);
+
+            },
+            {contacto ->
+                Log.d("MiAgenda", "MainActivity: Mostrar Menú Contextual")
+                mostarMenuContextual(contacto);
+            });
+    }
+
+    private fun realizarLlamada(contacto: Contacto){
+
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = "tel:${contacto.phone}".toUri()
+
+        startActivity(intent);
     }
 
     private fun actualizarContador(){
@@ -156,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this).setItems(items) { _, which ->
             when (which) {
                 0 -> enviarEmail(contacto);
-                1 -> ModificarContacto(contacto);
+                1 -> modificarContacto(contacto);
                 2 -> confirmarEliminarContacto(contacto);
             }
         }
@@ -177,9 +202,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun ModificarContacto(contacto: Contacto) {
+    private fun modificarContacto(contacto: Contacto) {
 
+        val intent = Intent(this, ContactoFormActivity::class.java)
+        intent.putExtra("indice", ContactoRepository.indiceDe(contacto))
+        intent.putExtra("nombre", contacto.name)
+        intent.putExtra("telefono", contacto.phone)
+        intent.putExtra("email", contacto.email)
+        intent.putExtra("favorito", contacto.favorite)
 
+        launcherForumlario.launch(intent)
 
     }
 

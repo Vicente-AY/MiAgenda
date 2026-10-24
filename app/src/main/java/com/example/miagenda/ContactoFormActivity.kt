@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,15 @@ class ContactoFormActivity : AppCompatActivity() {
         val campoEmail = findViewById<EditText>(R.id.email_input);
 
         val btnAccept = findViewById<Button>(R.id.btnAccept);
+
+        val indice = intent.getIntExtra("indice", -1)
+        if(indice != -1 && savedInstanceState == null){
+            campoNombre.setText(intent.getStringExtra("nombre"))
+            campoTelefono.setText(intent.getStringExtra("telefono"))
+            campoEmail.setText(intent.getStringExtra("email"))
+            findViewById<CheckBox>(R.id.favourite).isChecked = intent.getBooleanExtra("favorito", false)
+            findViewById<TextView>(R.id.title).text = getString(R.string.edit_contact_form_title)
+        }
 
         btnAccept.setOnClickListener {
 
@@ -58,6 +68,7 @@ class ContactoFormActivity : AppCompatActivity() {
             if(correctForm) {
 
                 val resultado = Intent();
+                resultado.putExtra("indice", indice);
 
                 resultado.putExtra("nombre", nombre);
                 resultado.putExtra("telefono", telefono);
