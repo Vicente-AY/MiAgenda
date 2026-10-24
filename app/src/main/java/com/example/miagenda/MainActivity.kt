@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
         mostrarUltimoContacto()
 
-        createPlaceholderData();
+        //createPlaceholderData();
     }
 
     private fun crearAdapter(): ContactoAdapter{
