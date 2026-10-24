@@ -1,5 +1,6 @@
 package com.example.miagenda
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ContactoAdapter(
     private var contactos: List<Contacto>,
-    private val onContactoClick: (Contacto) -> Unit) : RecyclerView.Adapter<ContactoAdapter.ContactoViewHolder>(){
+    private val onContactoClick: (Contacto) -> Unit,
+    private val onContactoLongClick: (Contacto) -> Unit) : RecyclerView.Adapter<ContactoAdapter.ContactoViewHolder>(){
 
     class ContactoViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
@@ -26,9 +28,12 @@ class ContactoAdapter(
     override fun onBindViewHolder(holder: ContactoViewHolder, position: Int){
 
         val contacto = contactos[position];
+
         holder.nombre.text = contacto.name;
         holder.telefono.text = contacto.phone;
         holder.itemView.setOnClickListener {onContactoClick(contacto)}
+        holder.itemView.setOnLongClickListener { Log.d("MiAgenda", "Adapter: Pulsacion larga en ${contacto.name}")
+            onContactoLongClick(contacto); true; }
     }
 
     override fun getItemCount(): Int {

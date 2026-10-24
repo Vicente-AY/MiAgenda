@@ -32,4 +32,8 @@ object ContactoRepository {
             return contactos.filter{it.favorite}
         }
     }
+
+    fun eliminar(contacto: Contacto){
+        contactos.remove(contacto);
+    }
 }

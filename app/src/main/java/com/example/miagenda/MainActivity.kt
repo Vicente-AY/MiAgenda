@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -62,12 +63,19 @@ class MainActivity : AppCompatActivity() {
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerContacts);
         recycler.layoutManager = LinearLayoutManager(this);
-        adapter = ContactoAdapter(ContactoRepository.obtenerTodos(false)){ contacto ->
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = "tel:${contacto.phone}".toUri()
 
-            startActivity(intent);
-        }
+        adapter = ContactoAdapter(ContactoRepository.obtenerTodos(false),
+            { contacto ->
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = "tel:${contacto.phone}".toUri()
+
+                startActivity(intent);
+            },
+            {contacto ->
+                Log.d("MiAgenda", "MainActivity: Mostrar Menú Contextual")
+                mostarMenuContextual(contacto);
+            }
+        )
 
         recycler.adapter = adapter;
 
@@ -138,6 +146,42 @@ class MainActivity : AppCompatActivity() {
         val nombre = prefs.getString("ultimoContacto", null);
 
         findViewById<TextView>(R.id.lastContact).text = nombre ?: getString(R.string.no_last_contact);
+
+    }
+
+    private fun mostarMenuContextual(contacto: Contacto) {
+        Log.d("MiAgenda", "MainActivity: Mostrando Menú Contextual")
+        var items = resources.getStringArray(R.array.menu_items)
+
+        AlertDialog.Builder(this).setItems(items) { _, which ->
+            when (which) {
+                0 -> {
+                    //enviar email
+                }
+
+                1 -> {
+                    //modificar contacto
+                }
+
+                2 -> {
+                    confirmarEliminarContacto(contacto);
+                }
+            }
+        }
+        .show();
+    }
+
+    private fun confirmarEliminarContacto(contacto: Contacto){
+
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.delete_message_alert) + " " + contacto.name + "?")
+            .setPositiveButton(R.string.btn_delete) { _, _ ->
+                ContactoRepository.eliminar(contacto)
+                refrescarLista()
+                actualizarContador()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show();
 
     }
 

@@ -15,6 +15,15 @@
     <string name="all_contacts">Todos los contactos</string>"
     <string name="sort">Ordenar</string>
 
+    <!-- Strings de botones del Menú contexual -->
+    <string-array name="menu_items">
+        <item>Enviar Email</item>
+        <item>Modificar Contacto</item>
+        <item>Eliminar Contacto</item>
+    </string-array>
+    <string name="delete_message_alert">¿Seguro que quieres Eliminar a </string>
+    <string name="btn_delete">Eliminar</string>">
+
 
 
     <!-- Strings de activity_contacto_form -->
