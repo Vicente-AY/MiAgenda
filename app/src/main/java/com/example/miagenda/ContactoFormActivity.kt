@@ -88,24 +88,32 @@ class ContactoFormActivity : AppCompatActivity() {
 
         btnCancel.setOnClickListener {
 
-            val cancelDialogBuilder = AlertDialog.Builder(this);
+            val nombre = campoNombre.text.toString().trim();
+            val telefono = campoTelefono.text.toString().trim();
+            val email = campoEmail.text.toString().trim();
 
-            cancelDialogBuilder.setMessage(R.string.message_alert)
-                .setPositiveButton(R.string.discard){ dialog, id ->
-                    finish();
-                    dialog.dismiss();
-                }
-                .setNegativeButton(R.string.cancel){dialog , id ->
-                    dialog.dismiss();
-                }
+            if(!nombre.isEmpty() || !telefono.isEmpty() || !email.isEmpty()){
 
-            val cancelDialog: AlertDialog = cancelDialogBuilder.create();
+                val cancelDialogBuilder = AlertDialog.Builder(this);
 
-            cancelDialog.show();
+                cancelDialogBuilder.setMessage(R.string.message_alert)
+                    .setPositiveButton(R.string.discard){ dialog, id ->
+                        dialog.dismiss();
+                        finish();
+                    }
+                    .setNegativeButton(R.string.cancel){dialog , id ->
+                        dialog.dismiss();
+                    }
 
+                val cancelDialog: AlertDialog = cancelDialogBuilder.create();
+
+                cancelDialog.show();
+            }
+            else{
+                finish();
+            }
         }
     }
-
 
     fun esTelefonoValido(telefono: String): Boolean{
 
