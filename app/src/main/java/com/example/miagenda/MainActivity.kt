@@ -260,15 +260,6 @@ class MainActivity : AppCompatActivity() {
         refrescarLista()
     }
 
-
-
-
-
-
-
-
-
-
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "MainActivity: onStart") }
     override fun onResume() { super.onResume(); Log.d("MiAgenda", "MainActivity: onResume") }
     override fun onPause() { super.onPause(); Log.d("MiAgenda", "MainActivity: onPause") }
