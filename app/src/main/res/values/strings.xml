@@ -27,7 +27,6 @@
     <string name="accept">Aceptar</string>
 
 
-
     <!-- Strings de activity_contacto_form -->
     <!-- Title-->
     <string name="add_contact_form_title">Añadir Contacto</string>
@@ -60,4 +59,13 @@
     <string name="message_alert">¿Quieres descartar el nuevo contacto?</string>"
     <string name="discard">Descartar</string>"
     <string name="cancel">Cancelar</string>
+
+    <!-- items del Spinner -->
+    <resources>
+        <string-array name="categories">
+            <item>Familia</item>
+            <item>Trabajo</item>
+            <item>Amigos</item>
+        </string-array>
+    </resources>
 </resources>
