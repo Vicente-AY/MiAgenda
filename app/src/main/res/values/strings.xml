@@ -31,6 +31,8 @@
     <!-- Title-->
     <string name="add_contact_form_title">Añadir Contacto</string>
     <string name="edit_contact_form_title">Modificar Contacto</string>
+    <!-- Options Menu-->
+    <string name="options_menu">Opciones"</string>
 
     <!-- placeholder busqueda-->
     <string name="search_hint">Buscar Contacto</string>

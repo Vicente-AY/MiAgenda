@@ -17,6 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/options"
+    />
+
+    <Button
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/options_menu"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
     />
 
     <LinearLayout
