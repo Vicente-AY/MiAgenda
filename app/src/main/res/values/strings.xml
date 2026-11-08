@@ -67,6 +67,8 @@
     <string name="discard">Descartar</string>"
     <string name="cancel">Cancelar</string>
 
+    <!-- Notes -->
+    <string name="notes">Notas: </string>"
     <!-- items del Spinner -->
 
     <string-array name="categories">
