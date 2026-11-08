@@ -78,4 +78,15 @@
         <item>Otros</item>
     </string-array>
 
+
+
+
+
+    <!-- Detalle contacto Strings -->
+    <!-- Titulo -->
+    <string name="title_contact_detail">Detalle Contacto"</string>
+    <!-- email -->
+    <string name="emailDetail">Email</string>
+    <!-- categoria -->
+    <string name="cagegory">Categoria</string>
 </resources>
