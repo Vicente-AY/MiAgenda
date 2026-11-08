@@ -44,4 +44,10 @@ object ContactoRepository {
     fun actualizar(contacto: Contacto, indice: Int){
         contactos[indice] = contacto;
     }
+
+    fun getContactoById(id: String): Contacto? {
+
+        return contactos.find { it.id == id }
+
+    }
 }

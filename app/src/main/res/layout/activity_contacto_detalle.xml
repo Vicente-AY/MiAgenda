@@ -99,12 +99,32 @@
         android:layout_marginTop="10dp"
         />
 
+    <!-- Favorito -->
+    <TextView
+        android:id="@+id/favoriteLabel"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/fav"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/favourite"
+        />
+    <TextView
+        android:id="@+id/fav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/name_example"
+        app:layout_constraintTop_toBottomOf="@+id/category"
+        app:layout_constraintStart_toEndOf="@id/favoriteLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        />
+
     <!-- Notas -->
     <TextView
         android:id="@+id/noteLabel"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/category"
+        app:layout_constraintTop_toBottomOf="@id/fav"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/notes"
         android:layout_marginTop="10dp"
@@ -113,7 +133,7 @@
         android:id="@+id/notes"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:hint="@string/name_example"
+        android:hint="@string/notes_example"
         app:layout_constraintTop_toBottomOf="@+id/noteLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

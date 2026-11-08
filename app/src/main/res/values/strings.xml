@@ -89,4 +89,9 @@
     <string name="emailDetail">Email</string>
     <!-- categoria -->
     <string name="cagegory">Categoria</string>
+
+    <string name="notes_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="is_favourite">Es contacto favorito</string>"
+    <string name="not_favourite">Es contacto no es favorito</string>"
+
 </resources>
