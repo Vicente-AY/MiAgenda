@@ -32,6 +32,7 @@ class ContactoAdapter(
         holder.nombre.text = contacto.name;
         holder.telefono.text = contacto.phone;
         holder.itemView.setOnClickListener {onContactoClick(contacto)}
+        Log.d("MiAgenda", "Bind: posición $position es ${contacto.name}")
         holder.itemView.setOnLongClickListener { Log.d("MiAgenda", "Adapter: Pulsacion larga en ${contacto.name}")
             onContactoLongClick(contacto); true; }
     }

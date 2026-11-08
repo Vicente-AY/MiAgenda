@@ -32,6 +32,11 @@
     <string name="add_contact_form_title">Añadir Contacto</string>
     <string name="edit_contact_form_title">Modificar Contacto</string>
 
+    <!-- placeholder busqueda-->
+    <string name="search_hint">Buscar Contacto</string>
+    <!-- boton busqueda-->
+    <string name="search_button">Buscar</string>
+
     <!-- Name -->
     <string name="name">Nombre: </string>
     <string name="name_example">Luis Pérez</string>
@@ -61,11 +66,12 @@
     <string name="cancel">Cancelar</string>
 
     <!-- items del Spinner -->
-    <resources>
-        <string-array name="categories">
-            <item>Familia</item>
-            <item>Trabajo</item>
-            <item>Amigos</item>
-        </string-array>
-    </resources>
+
+    <string-array name="categories">
+        <item>Familia</item>
+        <item>Trabajo</item>
+        <item>Amigos</item>
+        <item>Otros</item>
+    </string-array>
+
 </resources>
