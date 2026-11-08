@@ -94,4 +94,11 @@
     <string name="is_favourite">Es contacto favorito</string>"
     <string name="not_favourite">Es contacto no es favorito</string>"
 
+
+
+    <!-- Ajustes -->
+    <string name="title_ajustes">Ajustes</string>
+    <string name="contact_order">Orden de contactos</string>
+    <string name="remove_alert">Mostrar cuadro de dialogo para confirmar eliminación de contacto</string>
+    <string name="save">Guardar</string>
 </resources>

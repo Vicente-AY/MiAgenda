@@ -7,4 +7,74 @@
     android:layout_height="match_parent"
     tools:context=".AjustesActivity">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_ajustes"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        />
+
+    <!-- Nombre -->
+    <TextView
+        android:id="@+id/nameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/contact_order"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/order"
+        />
+    <Spinner
+        android:id="@+id/order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+
+        />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/order"
+        app:layout_constraintBaseline_toBaselineOf="@+id/remove_policy"
+        android:text="@string/remove_alert"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        />
+
+    <CheckBox
+        android:id="@+id/remove_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+
+        app:layout_constraintTop_toBottomOf="@+id/order"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remove_policy"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

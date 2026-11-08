@@ -6,5 +6,5 @@ data class Contacto(var id: String = "",
                     var email: String? = null,
                     var favorite: Boolean = false,
                     var category: String = "Otros",
-                    var notes: String? = null;
+                    var notes: String? = null
 )

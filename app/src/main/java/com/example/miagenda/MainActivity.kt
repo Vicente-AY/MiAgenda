@@ -29,15 +29,17 @@ class MainActivity : AppCompatActivity() {
                 val datos = resultado.data;
 
                 if(datos != null){
+                    val id = datos.getStringExtra("id") ?: "";
                     val nombre = datos.getStringExtra("nombre") ?: "";
                     val telefono = datos.getStringExtra("telefono") ?: "";
                     val email = datos.getStringExtra("email");
-                    val favorito = datos.getBooleanExtra("favorito", false);
+                    val favorito = datos.getBooleanExtra("favourite", false);
+                    val categoria = datos.getStringExtra("category") ?: "";
+                    val notas = datos.getStringExtra("notes");
 
-                    val indice = datos.getIntExtra("indice", -1)
-                    val contacto = Contacto(nombre, telefono, email, favorito);
+                    val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas);
 
-                    if(indice == -1){
+                    if(id == ""){
                         ContactoRepository.agregar(contacto);
                         getSharedPreferences("miagenda_prefs", MODE_PRIVATE)
                             .edit()
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                         mostrarUltimoContacto()
                     }
                     else{
-                        ContactoRepository.actualizar(contacto, indice);
+                        ContactoRepository.actualizar(contacto, id);
 
                     }
 

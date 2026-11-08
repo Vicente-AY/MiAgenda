@@ -41,13 +41,20 @@ object ContactoRepository {
         return contactos.indexOf(contacto);
     }
 
-    fun actualizar(contacto: Contacto, indice: Int){
-        contactos[indice] = contacto;
+    fun actualizar(contacto: Contacto, indice: String){
+
+
     }
 
     fun getContactoById(id: String): Contacto? {
 
         return contactos.find { it.id == id }
+
+    }
+
+    fun orderBy(){
+
+        if() contactos.sortedBy { it.name.lowercase()} else contactos.sortedBy {it.category}
 
     }
 }
