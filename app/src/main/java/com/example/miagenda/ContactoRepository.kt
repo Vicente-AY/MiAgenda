@@ -52,9 +52,9 @@ object ContactoRepository {
 
     }
 
-    fun orderBy(){
+    fun orderBy(ordenar: String){
 
-        if() contactos.sortedBy { it.name.lowercase()} else contactos.sortedBy {it.category}
+        if(ordenar == "Nombre") contactos.sortedBy { it.name.lowercase()} else contactos.sortedBy {it.category}
 
     }
 }

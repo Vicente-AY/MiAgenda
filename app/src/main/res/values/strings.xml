@@ -75,6 +75,7 @@
         <item>Familia</item>
         <item>Trabajo</item>
         <item>Amigos</item>
+        <item>Estudios</item>
         <item>Otros</item>
     </string-array>
 
@@ -101,4 +102,11 @@
     <string name="contact_order">Orden de contactos</string>
     <string name="remove_alert">Mostrar cuadro de dialogo para confirmar eliminación de contacto</string>
     <string name="save">Guardar</string>
+    <string name="save_settings_alert">Desea guardar los cambios?</string>
+    <string name="save_settings">Guardar cambios</string>
+
+    <string-array name="contact_order">
+        <item>Nombre</item>
+        <item>Categoria</item>
+    </string-array>
 </resources>

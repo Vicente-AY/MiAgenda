@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -24,28 +25,35 @@ class ContactoFormActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        //campos
         val campoNombre = findViewById<EditText>(R.id.name_input);
         val campoTelefono = findViewById<EditText>(R.id.phone_input);
         val campoEmail = findViewById<EditText>(R.id.email_input);
+        val campoFavorito = findViewById<CheckBox>(R.id.favourite)
+        val campoCategoria = findViewById<Spinner>(R.id.category);
+        val campoNotas = findViewById<EditText>(R.id.notes_input);
 
-        val btnAccept = findViewById<Button>(R.id.btnAccept);
-
-        val indice = intent.getIntExtra("indice", -1)
-        if(indice != -1 && savedInstanceState == null){
+        val id = intent.getStringExtra("id")
+        if(id != "" && savedInstanceState == null){
             campoNombre.setText(intent.getStringExtra("nombre"))
             campoTelefono.setText(intent.getStringExtra("telefono"))
             campoEmail.setText(intent.getStringExtra("email"))
+            campoFavorito.isChecked = intent.getBooleanExtra("favorito", false)
+            campoCategoria.setSelection(resources.getStringArray(R.array.categories).indexOf(intent.getStringExtra("category")))
+            campoNotas.setText(intent.getStringExtra("notes"))
+
             findViewById<CheckBox>(R.id.favourite).isChecked = intent.getBooleanExtra("favorito", false)
             findViewById<TextView>(R.id.title).text = getString(R.string.edit_contact_form_title)
         }
-
+        val btnAccept = findViewById<Button>(R.id.btnAccept);
         btnAccept.setOnClickListener {
 
-            val nombre = campoNombre.text.toString().trim();
-            val telefono = campoTelefono.text.toString().trim();
-            val email = campoEmail.text.toString().trim();
-            val favorito = findViewById<CheckBox>(R.id.favourite).isChecked();
+            var nombre = campoNombre.text.toString().trim();
+            var telefono = campoTelefono.text.toString().trim();
+            var email = campoEmail.text.toString().trim();
+            var favorito = campoFavorito.isChecked();
+            var categoria = campoCategoria.selectedItem.toString();
+            var notas = campoNotas.text.toString().trim();
 
             var correctForm = true;
 
@@ -68,15 +76,17 @@ class ContactoFormActivity : AppCompatActivity() {
             if(correctForm) {
 
                 val resultado = Intent();
-                resultado.putExtra("indice", indice);
 
                 resultado.putExtra("nombre", nombre);
                 resultado.putExtra("telefono", telefono);
                 resultado.putExtra("email", email.ifEmpty { null });
                 resultado.putExtra("favorito", favorito);
+                resultado.putExtra("category", categoria);
+                resultado.putExtra("notes", notas.ifEmpty { null });
+
                 setResult(RESULT_OK, resultado);
 
-                Log.d("MiAgenda", "Contacto añadido $nombre $telefono $email $favorito")
+                Log.d("MiAgenda", "Contacto añadido $nombre $telefono $email $favorito $categoria $notas")
 
                 finish();
             }

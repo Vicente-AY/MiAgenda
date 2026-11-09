@@ -1,8 +1,12 @@
 package com.example.miagenda
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,11 +22,63 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
-        val aceptar = findViewById<Button>(R.id.btnSaveSettings);
+        //cargamos las opciones previas
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        val previousOrder = prefs.getString("settings_order", "");
+        val previousRemove = prefs.getBoolean("settings_remove", false);
 
-        aceptar.setOnClickListener {
-            ;
+        val order = findViewById<Spinner>(R.id.order);
+        order.setSelection(resources.getStringArray(R.array.contact_order).indexOf(previousOrder));
+
+        val eliminar = findViewById<CheckBox>(R.id.remove_policy);
+        eliminar.isChecked = previousRemove;
+
+        val btnAceptar = findViewById<Button>(R.id.btnSaveSettings);
+        btnAceptar.setOnClickListener {
+
+            val ordenElegido = order.selectedItem.toString();
+            val politicaEliminacion = eliminar.isChecked();
+
+
+            val saveDialogBuilder = AlertDialog.Builder(this);
+
+            saveDialogBuilder.setMessage(R.string.save_settings_alert)
+                .setPositiveButton(R.string.save_settings){ dialog, id ->
+
+                    getSharedPreferences("settings", MODE_PRIVATE)
+                        .edit()
+                        .putString("settings_order", ordenElegido)
+                        .putBoolean("settings_remove",politicaEliminacion)
+                        .apply();
+
+                    dialog.dismiss();
+                    finish();
+                }
+                .setNegativeButton(R.string.cancel){dialog , id ->
+                    dialog.dismiss();
+                }
+
+            val saveDialog: AlertDialog = saveDialogBuilder.create();
+            saveDialog.show();
+
         }
+
+        val btnCancelar = findViewById<Button>(R.id.btnCancelSettings);
+        btnCancelar.setOnClickListener {
+
+            val cancelDialogBuilder = AlertDialog.Builder(this);
+
+            cancelDialogBuilder.setMessage(R.string.message_alert)
+                .setPositiveButton(R.string.discard){ dialog, id ->
+                    dialog.dismiss();
+                    finish();
+                }
+                .setNegativeButton(R.string.cancel){dialog , id ->
+                    dialog.dismiss();
+                }
+
+        }
+
 
     }
 }
