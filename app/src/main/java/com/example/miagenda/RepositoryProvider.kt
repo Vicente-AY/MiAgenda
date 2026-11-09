@@ -12,7 +12,7 @@ object RepositoryProvider {
 
     private fun crear(context: Context): AgendaRepository{
 
-        return MemoriaAgendaRepository()
+        return SqliteAgendaRepository(context)
 
     }
 

@@ -34,7 +34,8 @@ class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", 
             put("notes", notes)
 
         }
-        return db.insertOrThrow("contactos", null, valores)
+        return db.insertOrThrow("contactos",
+            null, valores)
 
     }
 
@@ -51,14 +52,19 @@ class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", 
             put("notes", notes)
         }
 
-        return db.update("contactos", valores, "id = ?", arrayOf(id.toString()));
+        return db.update("contactos",
+            valores,
+            "id = ?",
+            arrayOf(id.toString()));
 
     }
 
     fun eliminarContacto(id: Int): Int {
 
         val db = this.writableDatabase;
-        return db.delete("contactos", "id = ?", arrayOf(id.toString()));
+        return db.delete("contactos",
+            "id = ?",
+            arrayOf(id.toString()));
 
     }
 
