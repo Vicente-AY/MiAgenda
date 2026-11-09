@@ -5,7 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -118,7 +120,33 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        val busqueda = findViewById<EditText>(R.id.search_input);
+        val btnBuscar = findViewById<Button>(R.id.search_button);
+        btnBuscar.setOnClickListener {
+
+            val texto = busqueda.text.toString().trim();
+
+            if(!texto.isEmpty()){
+
+                RepositoryProvider.get(this).buscar(texto, { lista ->
+
+                    adapter.actualizar(lista);
+
+                },
+                { error ->
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                });
+            }
+
+        }
+
+
+
+
+
         mostrarUltimoContacto()
+
+
 
         //createPlaceholderData();
     }
@@ -245,198 +273,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun createPlaceholderData(){
 
-        ContactoRepository.agregar(Contacto(
-            id = "1",
-            name = "Carlos García",
-            phone = "612345678",
-            email = "carlos@gmail.com",
-            favorite = true,
-            category = "Amigos",
-            notes = "Amigo de la infancia"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "2",
-            name = "María López",
-            phone = "623456789",
-            email = "maria@gmail.com",
-            favorite = true,
-            category = "Familia",
-            notes = "Prima"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "3",
-            name = "Juan Martínez",
-            phone = "634567890",
-            email = "juan@gmail.com",
-            category = "Trabajo",
-            notes = "Compañero de oficina"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "4",
-            name = "Ana Sánchez",
-            phone = "645678901",
-            email = "ana@gmail.com",
-            favorite = true,
-            category = "Amigos",
-            notes = "Amiga de la universidad"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "5",
-            name = "Pedro Fernández",
-            phone = "656789012",
-            email = null,
-            category = "Trabajo",
-            notes = "Cliente habitual"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "6",
-            name = "Laura González",
-            phone = "667890123",
-            email = "laura@gmail.com",
-            favorite = true,
-            category = "Familia",
-            notes = "Hermana"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "7",
-            name = "David Rodríguez",
-            phone = "678901234",
-            email = "david@gmail.com",
-            category = "Amigos",
-            notes = "Amigo del gimnasio"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "8",
-            name = "Lucía Pérez",
-            phone = "689012345",
-            email = "lucia@gmail.com",
-            category = "Estudios",
-            notes = "Compañera de clase"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "9",
-            name = "Miguel Torres",
-            phone = "690123456",
-            email = null,
-            favorite = true,
-            category = "Trabajo",
-            notes = "Jefe de departamento"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "10",
-            name = "Sofía Ramírez",
-            phone = "601234567",
-            email = "sofia@gmail.com",
-            category = "Amigos",
-            notes = "Amiga de la infancia"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "11",
-            name = "Alejandro Jiménez",
-            phone = "611223344",
-            email = "alejandro@gmail.com",
-            favorite = true,
-            category = "Trabajo",
-            notes = "Socio de proyecto"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "12",
-            name = "Elena Ruiz",
-            phone = "622334455",
-            email = "elena@gmail.com",
-            category = "Familia",
-            notes = "Tía"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "13",
-            name = "Pablo Moreno",
-            phone = "633445566",
-            email = null,
-            category = "Otros",
-            notes = "Vecino"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "14",
-            name = "Claudia Muñoz",
-            phone = "644556677",
-            email = "claudia@gmail.com",
-            favorite = true,
-            category = "Amigos",
-            notes = "Mejor amiga"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "15",
-            name = "Javier Alonso",
-            phone = "655667788",
-            email = "javier@gmail.com",
-            category = "Trabajo",
-            notes = "Compañero de equipo"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "16",
-            name = "Isabel Romero",
-            phone = "666778899",
-            email = "isabel@gmail.com",
-            category = "Estudios",
-            notes = "Profesora"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "17",
-            name = "Daniel Navarro",
-            phone = "677889900",
-            email = null,
-            favorite = true,
-            category = "Familia",
-            notes = "Primo"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "18",
-            name = "Marta Iglesias",
-            phone = "688990011",
-            email = "marta@gmail.com",
-            category = "Amigos",
-            notes = "Amiga del trabajo"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "19",
-            name = "Adrián Castro",
-            phone = "699001122",
-            email = "adrian@gmail.com",
-            favorite = true,
-            category = "Estudios",
-            notes = "Compañero de universidad"
-        ))
-
-        ContactoRepository.agregar(Contacto(
-            id = "20",
-            name = "Paula Ortega",
-            phone = "600112233",
-            email = "paula@gmail.com",
-            category = "Otros",
-            notes = "Contacto personal"
-        ))
-        refrescarLista()
-    }
 
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "MainActivity: onStart") }
     override fun onResume() { super.onResume(); Log.d("MiAgenda", "MainActivity: onResume") }
