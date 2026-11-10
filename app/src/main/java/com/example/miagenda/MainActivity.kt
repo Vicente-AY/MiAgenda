@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.core.net.toUri
 import java.lang.System.out
 import androidx.core.content.edit
+import com.example.miagenda.RepositoryProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,36 +36,25 @@ class MainActivity : AppCompatActivity() {
                     val nombre = datos.getStringExtra("nombre") ?: "";
                     val telefono = datos.getStringExtra("telefono") ?: "";
                     val email = datos.getStringExtra("email");
-                    val favorito = datos.getBooleanExtra("favourite", false);
+                    val favorito = datos.getBooleanExtra("favorito", false);
                     val categoria = datos.getStringExtra("category") ?: "";
                     val notas = datos.getStringExtra("notes");
 
                     val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas);
 
-                    if(id == ""){
-                        ContactoRepository.agregar(contacto);
-                        getSharedPreferences("miagenda_prefs", MODE_PRIVATE)
-                            .edit()
-                            .putString("ultimoContacto", nombre)
-                            .apply();
-                        mostrarUltimoContacto()
-                    }
-                    else{
-                        ContactoRepository.actualizar(contacto, id);
+                    RepositoryProvider.get(this).guardar(contacto, {
 
-                    }
+                        getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
+                            putString("ultimoContacto", nombre)
+                        }
 
-                    getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
-                        putString(
-                            "ultimoContacto",
-                            nombre
-                        )
-                    };
-
-                    mostrarUltimoContacto()
-
-                    refrescarLista()
-                    actualizarContador()
+                        mostrarUltimoContacto();
+                        refrescarLista();
+                        actualizarContador();
+                    },
+                    { error ->
+                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                    });
                 }
             }
     }
@@ -84,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = crearAdapter();
 
+        refrescarLista();
 
         recycler.adapter = adapter;
 
@@ -126,33 +117,40 @@ class MainActivity : AppCompatActivity() {
 
             val texto = busqueda.text.toString().trim();
 
-            if(!texto.isEmpty()){
+            if (!texto.isEmpty()) {
 
-                RepositoryProvider.get(this).buscar(texto, { lista ->
+                RepositoryProvider.get(this).buscar(
+                    texto, { lista ->
 
-                    adapter.actualizar(lista);
+                        adapter.actualizar(lista);
 
-                },
-                { error ->
-                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                });
+                    },
+                    { error ->
+                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                    });
+            } else {
+
+                RepositoryProvider.get(this).obtenerTodos(
+                    onOk = { lista ->
+
+                        adapter.actualizar(lista);
+                    },
+                    onError = { error ->
+                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+
+
+                    });
+
+
             }
-
         }
 
-
-
-
-
         mostrarUltimoContacto()
-
-
-
-        //createPlaceholderData();
     }
 
     private fun crearAdapter(): ContactoAdapter{
-        return ContactoAdapter(ContactoRepository.obtenerTodos(false),
+        return ContactoAdapter(
+            emptyList(),
             { contacto ->
                 Log.d("MiAgenda", "Iniciando Llamada")
                 realizarLlamada(contacto);
@@ -174,7 +172,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun actualizarContador(){
 
-        findViewById<TextView>(R.id.contacts_count).text = ContactoRepository.obtenerTodos(false).size.toString();
+        RepositoryProvider.get(this).obtenerTodos(onOk = { lista ->
+            val total = lista.size
+            findViewById<TextView>(R.id.contacts_count).text = total.toString()
+        },
+            {mensaje ->
+                Log.e("MiAgenda", "Error al actualizar contador: $mensaje")
+
+            });
+
     }
 
     private fun refrescarLista(){
@@ -182,16 +188,24 @@ class MainActivity : AppCompatActivity() {
         val ordenar = findViewById<ToggleButton>(R.id.sort)
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
-        val lista: List<Contacto>
+        RepositoryProvider.get(this).obtenerTodos(
+            onOk = { listaCompleta ->
+                var lista = listaCompleta
 
-        if(soloFavoritos.isChecked){
-            lista = ContactoRepository.obtenerFavoritos(ordenar.isChecked)
-        }
-        else{
-            lista = ContactoRepository.obtenerTodos(ordenar.isChecked)
-        }
+                if (soloFavoritos.isChecked) {
+                    lista = lista.filter { it.favorite }
+                }
 
-        adapter.actualizar(lista);
+                if (ordenar.isChecked) {
+                    lista = lista.sortedBy { it.name.lowercase() }
+                }
+
+                adapter.actualizar(lista)
+            },
+            onError = { error ->
+                Log.e("MiAgenda", "Error al refrescar lista: $error")
+            }
+        );
 
     }
 
@@ -218,7 +232,7 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this).setItems(items) { _, which ->
             when (which) {
-                0 -> enviarEmail(contacto);
+                0 -> vistaDetalles(contacto);
                 1 -> modificarContacto(contacto);
                 2 -> confirmarEliminarContacto(contacto);
             }
@@ -231,9 +245,16 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setMessage(getString(R.string.delete_message_alert) + " " + contacto.name + "?")
             .setPositiveButton(R.string.btn_delete) { _, _ ->
-                ContactoRepository.eliminar(contacto)
-                refrescarLista()
-                actualizarContador()
+                RepositoryProvider.get(this).eliminar(
+                    contacto.id,
+                    onOk = {
+                        refrescarLista()
+                        actualizarContador()
+                    },
+                    onError = { error ->
+                        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
             .setNegativeButton(R.string.cancel, null)
             .show();
@@ -243,40 +264,41 @@ class MainActivity : AppCompatActivity() {
     private fun modificarContacto(contacto: Contacto) {
 
         val intent = Intent(this, ContactoFormActivity::class.java)
-        intent.putExtra("indice", ContactoRepository.indiceDe(contacto))
+        intent.putExtra("id", contacto.id)
         intent.putExtra("nombre", contacto.name)
         intent.putExtra("telefono", contacto.phone)
         intent.putExtra("email", contacto.email)
         intent.putExtra("favorito", contacto.favorite)
+        intent.putExtra("categoria", contacto.category)
+        intent.putExtra("notas", contacto.notes)
 
         launcherForumlario.launch(intent)
 
     }
 
-    private fun enviarEmail(contacto: Contacto){
+    private fun vistaDetalles(contacto: Contacto){
 
-        if(contacto.email == "" || contacto.email == null){
+        val intent = Intent(this, ContactoDetalleActivity::class.java)
+        intent.putExtra("id", contacto.id)
+        intent.putExtra("nombre", contacto.name)
+        intent.putExtra("telefono", contacto.phone)
+        intent.putExtra("email", contacto.email)
+        intent.putExtra("favorito", contacto.favorite)
+        intent.putExtra("categoria", contacto.category)
+        intent.putExtra("notas", contacto.notes)
 
-            AlertDialog.Builder(this)
-                .setMessage(R.string.no_email_alert)
-                .setPositiveButton(R.string.accept) { dialog, _ ->
-                    dialog.dismiss();
-                }
-                .show();
-        }
-        else{
-            val intent = Intent(Intent.ACTION_SENDTO)
-            intent.data = "mailto:${contacto.email}".toUri()
+        startActivity(intent);
 
-            startActivity(intent);
-        }
 
     }
 
 
 
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "MainActivity: onStart") }
-    override fun onResume() { super.onResume(); Log.d("MiAgenda", "MainActivity: onResume") }
+    override fun onResume() {
+        super.onResume(); Log.d("MiAgenda", "MainActivity: onResume")
+        refrescarLista();
+    }
     override fun onPause() { super.onPause(); Log.d("MiAgenda", "MainActivity: onPause") }
     override fun onStop() { super.onStop(); Log.d("MiAgenda", "MainActivity: onStop") }
     override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "MainActivity: onDestroy") }

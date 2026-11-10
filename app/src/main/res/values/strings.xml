@@ -17,7 +17,7 @@
 
     <!-- Strings de botones del Menú contexual -->
     <string-array name="menu_items">
-        <item>Enviar Email</item>
+        <item>Detalles de Contacto</item>
         <item>Modificar Contacto</item>
         <item>Eliminar Contacto</item>
     </string-array>
@@ -95,6 +95,12 @@
     <string name="is_favourite">Es contacto favorito</string>"
     <string name="not_favourite">Es contacto no es favorito</string>"
 
+    <!-- Botones -->
+    <string name="call">Llamar</string>
+    <string name="remove">Eliminar</string>
+    <string name="btn_email">Email</string>"
+    <string name="edit">Editar</string>
+    <string name="back">Atras</string>
 
 
     <!-- Ajustes -->

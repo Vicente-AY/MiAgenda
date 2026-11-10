@@ -110,6 +110,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/favourite"
         app:layout_constraintBaseline_toBaselineOf="@+id/favourite"
+        android:entries="@array/categories"
     />
 
     <CheckBox

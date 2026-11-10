@@ -53,7 +53,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
             val lista = mutableListOf<Contacto>();
             val db = dbHelper.readableDatabase;
 
-            val busqueda = "nombre LIKE ?";
+            val busqueda = "name LIKE ?";
             val args = arrayOf("%$text%");
 
             db.query("contactos", null, busqueda, args, null, null, null).use { cursor ->
