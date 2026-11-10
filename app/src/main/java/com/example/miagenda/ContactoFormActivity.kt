@@ -34,7 +34,7 @@ class ContactoFormActivity : AppCompatActivity() {
         val campoNotas = findViewById<EditText>(R.id.notes_input);
 
         val id = intent.getStringExtra("id")
-        if(id != "" && savedInstanceState == null){
+        if(!id.isNullOrEmpty() && savedInstanceState == null){
             campoNombre.setText(intent.getStringExtra("nombre"))
             campoTelefono.setText(intent.getStringExtra("telefono"))
             campoEmail.setText(intent.getStringExtra("email"))
@@ -77,6 +77,7 @@ class ContactoFormActivity : AppCompatActivity() {
 
                 val resultado = Intent();
 
+                resultado.putExtra("id", id ?: "");
                 resultado.putExtra("nombre", nombre);
                 resultado.putExtra("telefono", telefono);
                 resultado.putExtra("email", email.ifEmpty { null });
