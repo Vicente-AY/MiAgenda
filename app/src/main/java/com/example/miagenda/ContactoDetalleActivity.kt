@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -13,6 +15,40 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class ContactoDetalleActivity : AppCompatActivity() {
+
+    private val launcherEditar = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            resultado ->
+        if(resultado.resultCode == RESULT_OK){
+            val datos = resultado.data;
+
+            if(datos != null){
+                val id = datos.getStringExtra("id") ?: "";
+                val nombre = datos.getStringExtra("nombre") ?: "";
+                val telefono = datos.getStringExtra("telefono") ?: "";
+                val email = datos.getStringExtra("email");
+                val favorito = datos.getBooleanExtra("favorito", false);
+                val categoria = datos.getStringExtra("category") ?: "";
+                val notas = datos.getStringExtra("notes");
+
+                val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas);
+
+                RepositoryProvider.get(this).guardar(contacto, {
+
+                    findViewById<TextView>(R.id.name).text = nombre;
+                    findViewById<TextView>(R.id.phone).text = telefono;
+                    findViewById<TextView>(R.id.email).text = email;
+                    if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(R.id.fav).text = getString(R.string.not_favourite);
+                    findViewById<TextView>(R.id.category).text = categoria
+                    findViewById<TextView>(R.id.notes).text = notas;
+                    findViewById<Button>(R.id.btnEmail).isEnabled = email.isNullOrEmpty();
+                },
+                    { error ->
+                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                    });
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,22 +71,22 @@ class ContactoDetalleActivity : AppCompatActivity() {
         val id: String = intent.getStringExtra("id") ?: "";
 
         //datos
-        val nombre = intent.getStringExtra("name") ?: "";
+        val nombre = intent.getStringExtra("nombre") ?: "";
         campoNombre.setText(nombre)
 
-        val telefono = intent.getStringExtra("phone") ?: "";
+        val telefono = intent.getStringExtra("telefono") ?: "";
         campoTelefono.setText(telefono);
 
         val email = intent.getStringExtra("email");
         campoEmail.setText(email)
 
-        val favorito = intent.getBooleanExtra("favourite", false);
+        val favorito = intent.getBooleanExtra("favorito", false);
         if(favorito) campoFavorito.setText(R.string.is_favourite) else campoFavorito.setText(R.string.not_favourite);
 
-        val categoria = intent.getStringExtra("category") ?: "";
+        val categoria = intent.getStringExtra("categoria") ?: "Otros";
         campoCategoria.setText(categoria);
 
-        val notas = intent.getStringExtra("notes");
+        val notas = intent.getStringExtra("notas");
         campoNotas.setText(notas);
 
         //botones
@@ -73,34 +109,50 @@ class ContactoDetalleActivity : AppCompatActivity() {
         btnEdit.setOnClickListener {
 
             val intent = Intent(this, ContactoFormActivity::class.java)
-            intent.putExtra(id, id);
-            intent.putExtra("name", campoNombre.text.toString());
-            intent.putExtra("phone", campoTelefono.text.toString());
+            intent.putExtra("id", id);
+            intent.putExtra("nombre", campoNombre.text.toString());
+            intent.putExtra("telefono", campoTelefono.text.toString());
             intent.putExtra("email", campoEmail.text.toString());
-            intent.putExtra("favourite", favorito);
-            intent.putExtra("category", campoCategoria.text.toString());
-            intent.putExtra("notes", campoNotas.text.toString());
+            intent.putExtra("favorito", favorito);
+            intent.putExtra("categoria", campoCategoria.text.toString());
+            intent.putExtra("notas", campoNotas.text.toString());
 
-            startActivity(intent);
+            launcherEditar.launch(intent);
         }
 
         btnDelete.setOnClickListener {
 
-            var contacto = ContactoRepository.getContactoById(id);
+            RepositoryProvider.get(this).obtenerPorId(id, { contacto ->
 
-            if(contacto != null){
+                if(contacto != null){
 
-                AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.delete_message_alert) + " " + nombre + "?")
-                    .setPositiveButton(R.string.btn_delete) { _, _ ->
-                        ContactoRepository.eliminar(contacto)
-                    }
-                    .setNegativeButton(R.string.cancel, null)
-                    .show();
+                    AlertDialog.Builder(this)
+                        .setMessage(getString(R.string.delete_message_alert) + " " + nombre + "?")
+                        .setPositiveButton(R.string.btn_delete) { _, _ ->
+                            RepositoryProvider.get(this).eliminar(
+                                id,
+                                onOk = { finish() },
+                                onError = { error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show() }
+                            )
+                        }
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+                }
+
+            },
+                { error ->
+                    Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                });
+
 
             }
+
+        var btnAtras = findViewById<Button>(R.id.btnAtras);
+        btnAtras.setOnClickListener {
+            finish()
         }
     }
+
 
     private fun realizarLlamada(phone: String){
 
@@ -116,4 +168,5 @@ class ContactoDetalleActivity : AppCompatActivity() {
         intent.data = "mailto:${email}".toUri()
 
     }
+
 }
