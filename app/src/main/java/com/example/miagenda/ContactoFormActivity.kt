@@ -39,8 +39,8 @@ class ContactoFormActivity : AppCompatActivity() {
             campoTelefono.setText(intent.getStringExtra("telefono"))
             campoEmail.setText(intent.getStringExtra("email"))
             campoFavorito.isChecked = intent.getBooleanExtra("favorito", false)
-            campoCategoria.setSelection(resources.getStringArray(R.array.categories).indexOf(intent.getStringExtra("category")))
-            campoNotas.setText(intent.getStringExtra("notes"))
+            campoCategoria.setSelection(resources.getStringArray(R.array.categories).indexOf(intent.getStringExtra("categoria")))
+            campoNotas.setText(intent.getStringExtra("notas"))
 
             findViewById<CheckBox>(R.id.favourite).isChecked = intent.getBooleanExtra("favorito", false)
             findViewById<TextView>(R.id.title).text = getString(R.string.edit_contact_form_title)

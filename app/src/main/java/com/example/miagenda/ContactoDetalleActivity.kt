@@ -16,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat
 
 class ContactoDetalleActivity : AppCompatActivity() {
 
+    private var favorito: Boolean = false;
+
     private val launcherEditar = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             resultado ->
         if(resultado.resultCode == RESULT_OK){
@@ -26,7 +28,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
                 val nombre = datos.getStringExtra("nombre") ?: "";
                 val telefono = datos.getStringExtra("telefono") ?: "";
                 val email = datos.getStringExtra("email");
-                val favorito = datos.getBooleanExtra("favorito", false);
+                favorito = datos.getBooleanExtra("favorito", false);
                 val categoria = datos.getStringExtra("category") ?: "";
                 val notas = datos.getStringExtra("notes");
 
@@ -40,7 +42,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
                     if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(R.id.fav).text = getString(R.string.not_favourite);
                     findViewById<TextView>(R.id.category).text = categoria
                     findViewById<TextView>(R.id.notes).text = notas;
-                    findViewById<Button>(R.id.btnEmail).isEnabled = email.isNullOrEmpty();
+                    findViewById<Button>(R.id.btnEmail).isEnabled = !email.isNullOrEmpty();
                 },
                     { error ->
                         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
@@ -80,7 +82,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
         val email = intent.getStringExtra("email");
         campoEmail.setText(email)
 
-        val favorito = intent.getBooleanExtra("favorito", false);
+        favorito = intent.getBooleanExtra("favorito", false);
         if(favorito) campoFavorito.setText(R.string.is_favourite) else campoFavorito.setText(R.string.not_favourite);
 
         val categoria = intent.getStringExtra("categoria") ?: "Otros";
