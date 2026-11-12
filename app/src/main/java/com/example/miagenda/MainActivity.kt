@@ -4,8 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
@@ -111,42 +113,61 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        val busqueda = findViewById<EditText>(R.id.search_input);
         val btnBuscar = findViewById<Button>(R.id.search_button);
         btnBuscar.setOnClickListener {
 
-            val texto = busqueda.text.toString().trim();
-            busqueda.text.clear();
+            buscar();
 
-            if (!texto.isEmpty()) {
-
-                RepositoryProvider.get(this).buscar(
-                    texto, { lista ->
-
-                        adapter.actualizar(lista);
-
-                    },
-                    { error ->
-                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                    });
-            } else {
-
-                RepositoryProvider.get(this).obtenerTodos(
-                    onOk = { lista ->
-
-                        adapter.actualizar(lista);
-                    },
-                    onError = { error ->
-                        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-
-
-                    });
-
-
-            }
         }
 
         mostrarUltimoContacto()
+    }
+
+    private fun buscar(){
+
+        val progressBar = findViewById<ProgressBar>(R.id.loading);
+
+
+        val busqueda = findViewById<EditText>(R.id.search_input);
+
+        val texto = busqueda.text.toString().trim();
+        busqueda.text.clear();
+
+        progressBar.visibility = View.VISIBLE;
+
+        if (!texto.isEmpty()) {
+
+
+
+            RepositoryProvider.get(this).buscar(
+                texto, { lista ->
+                    progressBar.visibility = View.GONE;
+                    adapter.actualizar(lista);
+
+                },
+                { error ->
+                    progressBar.visibility = View.GONE;
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                });
+        } else {
+
+            RepositoryProvider.get(this).obtenerTodos(
+                onOk = { lista ->
+
+                    progressBar.visibility = View.GONE;
+                    adapter.actualizar(lista);
+
+                },
+                onError = { error ->
+
+                    progressBar.visibility = View.GONE;
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+
+                });
+
+
+        }
+
     }
 
     private fun crearAdapter(): ContactoAdapter{
@@ -191,8 +212,14 @@ class MainActivity : AppCompatActivity() {
 
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
+        val progressBar = findViewById<ProgressBar>(R.id.loading);
+        progressBar.visibility = View.VISIBLE;
+
         RepositoryProvider.get(this).obtenerTodos(
             onOk = { listaCompleta ->
+
+                progressBar.visibility = View.GONE;
+
                 var lista = listaCompleta
 
                 if (soloFavoritos.isChecked) {
@@ -209,7 +236,9 @@ class MainActivity : AppCompatActivity() {
                 adapter.actualizar(lista)
             },
             onError = { error ->
+                progressBar.visibility = View.GONE;
                 Log.e("MiAgenda", "Error al refrescar lista: $error")
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show()
             }
         );
 
