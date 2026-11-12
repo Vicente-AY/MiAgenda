@@ -2,6 +2,7 @@ package com.example.miagenda
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Spinner
@@ -78,4 +79,11 @@ class AjustesActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onStart() { super.onStart(); Log.d("MiAgenda", "AjustesActivity: onStart") }
+    override fun onResume() { super.onResume(); Log.d("MiAgenda", "AjustesActivity: onResume") }
+    override fun onPause() { super.onPause(); Log.d("MiAgenda", "AjustesActivity: onPause") }
+    override fun onStop() { super.onStop(); Log.d("MiAgenda", "AjustesActivity: onStop") }
+    override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "AjustesActivity: onDestroy") }
+
 }

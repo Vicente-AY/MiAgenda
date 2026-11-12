@@ -2,6 +2,7 @@ package com.example.miagenda
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
@@ -180,5 +181,12 @@ class ContactoDetalleActivity : AppCompatActivity() {
         intent.data = "mailto:${email}".toUri()
 
     }
+
+
+    override fun onStart() { super.onStart(); Log.d("MiAgenda", "ContactoDetalleActivity: onStart") }
+    override fun onResume() { super.onResume(); Log.d("MiAgenda", "ContactoDetalleActivity: onResume") }
+    override fun onPause() { super.onPause(); Log.d("MiAgenda", "ContactoDetalleActivity: onPause") }
+    override fun onStop() { super.onStop(); Log.d("MiAgenda", "ContactoDetalleActivity: onStop") }
+    override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "ContactoDetalleActivity: onDestroy") }
 
 }
