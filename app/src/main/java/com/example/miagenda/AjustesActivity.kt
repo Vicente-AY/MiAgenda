@@ -22,15 +22,16 @@ class AjustesActivity : AppCompatActivity() {
             insets
         }
 
-        //cargamos las opciones previas
-        val prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        val previousOrder = prefs.getString("settings_order", "");
-        val previousRemove = prefs.getBoolean("settings_remove", false);
-
         val order = findViewById<Spinner>(R.id.order);
+        val eliminar = findViewById<CheckBox>(R.id.remove_policy);
+
+        //cargamos las opciones previas
+        val settings = getSharedPreferences("settings", MODE_PRIVATE);
+        val previousOrder = settings.getString("settings_order", "");
+        val previousRemove = settings.getBoolean("settings_remove", true);
+
         order.setSelection(resources.getStringArray(R.array.contact_order).indexOf(previousOrder));
 
-        val eliminar = findViewById<CheckBox>(R.id.remove_policy);
         eliminar.isChecked = previousRemove;
 
         val btnAceptar = findViewById<Button>(R.id.btnSaveSettings);
@@ -38,7 +39,6 @@ class AjustesActivity : AppCompatActivity() {
 
             val ordenElegido = order.selectedItem.toString();
             val politicaEliminacion = eliminar.isChecked();
-
 
             val saveDialogBuilder = AlertDialog.Builder(this);
 
@@ -69,16 +69,13 @@ class AjustesActivity : AppCompatActivity() {
             val cancelDialogBuilder = AlertDialog.Builder(this);
 
             cancelDialogBuilder.setMessage(R.string.message_alert)
-                .setPositiveButton(R.string.discard){ dialog, id ->
-                    dialog.dismiss();
-                    finish();
-                }
-                .setNegativeButton(R.string.cancel){dialog , id ->
-                    dialog.dismiss();
-                }
-
+            .setPositiveButton(R.string.discard){ dialog, id ->
+                dialog.dismiss();
+                finish();
+            }
+            .setNegativeButton(R.string.cancel){dialog , id ->
+                dialog.dismiss();
+            }
         }
-
-
     }
 }

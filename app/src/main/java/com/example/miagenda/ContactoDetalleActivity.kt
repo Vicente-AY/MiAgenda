@@ -124,30 +124,24 @@ class ContactoDetalleActivity : AppCompatActivity() {
 
         btnDelete.setOnClickListener {
 
-            RepositoryProvider.get(this).obtenerPorId(id, { contacto ->
+            val settings = getSharedPreferences("settings", MODE_PRIVATE);
+            val mostrarCuadro = settings.getBoolean("settings_remove", false)
 
-                if(contacto != null){
+            if (mostrarCuadro) {
 
-                    AlertDialog.Builder(this)
-                        .setMessage(getString(R.string.delete_message_alert) + " " + nombre + "?")
-                        .setPositiveButton(R.string.btn_delete) { _, _ ->
-                            RepositoryProvider.get(this).eliminar(
-                                id,
-                                onOk = { finish() },
-                                onError = { error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show() }
-                            )
-                        }
-                        .setNegativeButton(R.string.cancel, null)
-                        .show();
-                }
-
-            },
-                { error ->
-                    Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                });
-
-
+                AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.delete_message_alert) + " " + nombre + "?")
+                    .setPositiveButton(R.string.btn_delete) { _, _ ->
+                        eliminarContacto(id);
+                    }
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
             }
+            else{
+                eliminarContacto(id);
+            }
+
+        }
 
         var btnAtras = findViewById<Button>(R.id.btnAtras);
         btnAtras.setOnClickListener {
@@ -155,6 +149,22 @@ class ContactoDetalleActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun eliminarContacto(id: String){
+
+        RepositoryProvider.get(this).eliminar(
+            id,
+            onOk = { finish() },
+            onError = { error ->
+                Toast.makeText(
+                    this,
+                    error,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+
+    }
 
     private fun realizarLlamada(phone: String){
 

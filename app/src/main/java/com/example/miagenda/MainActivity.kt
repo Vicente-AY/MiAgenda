@@ -25,7 +25,7 @@ import com.example.miagenda.RepositoryProvider
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ContactoAdapter
-
+    private var sortMode: String? = "";
     private val launcherForumlario = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         resultado ->
             if(resultado.resultCode == RESULT_OK){
@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         btnBuscar.setOnClickListener {
 
             val texto = busqueda.text.toString().trim();
+            busqueda.text.clear();
 
             if (!texto.isEmpty()) {
 
@@ -185,7 +186,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun refrescarLista(){
 
-        val ordenar = findViewById<ToggleButton>(R.id.sort)
+        val settings = getSharedPreferences("settings", MODE_PRIVATE);
+        val sortMode = settings.getString("settings_order", "")
+
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
 
         RepositoryProvider.get(this).obtenerTodos(
@@ -196,8 +199,11 @@ class MainActivity : AppCompatActivity() {
                     lista = lista.filter { it.favorite }
                 }
 
-                if (ordenar.isChecked) {
+                if (sortMode == "Nombre") {
                     lista = lista.sortedBy { it.name.lowercase() }
+                }
+                else if (sortMode == "Categoria"){
+                    lista = lista.sortedBy { it.category.lowercase() }
                 }
 
                 adapter.actualizar(lista)
@@ -242,22 +248,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun confirmarEliminarContacto(contacto: Contacto){
 
-        AlertDialog.Builder(this)
-            .setMessage(getString(R.string.delete_message_alert) + " " + contacto.name + "?")
-            .setPositiveButton(R.string.btn_delete) { _, _ ->
-                RepositoryProvider.get(this).eliminar(
-                    contacto.id,
-                    onOk = {
-                        refrescarLista()
-                        actualizarContador()
-                    },
-                    onError = { error ->
-                        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                    }
-                )
+        val settings = getSharedPreferences("settings", MODE_PRIVATE);
+        val mostrarCuadro = settings.getBoolean("settings_remove", false)
+
+        if(mostrarCuadro) {
+            AlertDialog.Builder(this)
+                .setMessage(getString(R.string.delete_message_alert) + " " + contacto.name + "?")
+                .setPositiveButton(R.string.btn_delete) { _, _ ->
+                    eliminarContacto(contacto)
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+        }
+        else{
+            eliminarContacto(contacto);
+        }
+    }
+
+    private fun eliminarContacto(contacto: Contacto){
+
+        RepositoryProvider.get(this).eliminar(
+            contacto.id,
+            onOk = {
+                refrescarLista()
+                actualizarContador()
+            },
+            onError = { error ->
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton(R.string.cancel, null)
-            .show();
+        )
 
     }
 
@@ -298,6 +317,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume(); Log.d("MiAgenda", "MainActivity: onResume")
         refrescarLista();
+        actualizarContador();
     }
     override fun onPause() { super.onPause(); Log.d("MiAgenda", "MainActivity: onPause") }
     override fun onStop() { super.onStop(); Log.d("MiAgenda", "MainActivity: onStop") }
