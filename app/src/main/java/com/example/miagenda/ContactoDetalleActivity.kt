@@ -93,7 +93,6 @@ class ContactoDetalleActivity : AppCompatActivity() {
         campoNotas.setText(notas);
 
         //botones
-
         val btnCall = findViewById<Button>(R.id.btnCall);
         val btnEmail = findViewById<Button>(R.id.btnEmail);
         val btnEdit = findViewById<Button>(R.id.btnEdit);
@@ -180,6 +179,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = "mailto:${email}".toUri()
 
+        startActivity(intent);
     }
 
 

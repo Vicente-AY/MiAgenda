@@ -137,8 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         if (!texto.isEmpty()) {
 
-
-
             RepositoryProvider.get(this).buscar(
                 texto, { lista ->
                     progressBar.visibility = View.GONE;
@@ -148,7 +146,8 @@ class MainActivity : AppCompatActivity() {
                 { error ->
                     progressBar.visibility = View.GONE;
                     Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                });
+                }
+            );
         } else {
 
             RepositoryProvider.get(this).obtenerTodos(
@@ -163,11 +162,9 @@ class MainActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE;
                     Toast.makeText(this, error, Toast.LENGTH_LONG).show();
 
-                });
-
-
+                }
+            );
         }
-
     }
 
     private fun crearAdapter(): ContactoAdapter{
@@ -244,12 +241,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle){
-        super.onSaveInstanceState(outState);
-
-        val interruptor = findViewById<ToggleButton>(R.id.only_favourites);
-        outState.putBoolean("soloFavoritos", interruptor.isChecked());
-    }
 
     private fun mostrarUltimoContacto(){
 

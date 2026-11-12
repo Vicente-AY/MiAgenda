@@ -72,11 +72,11 @@
     <!-- items del Spinner -->
 
     <string-array name="categories">
-        <item>Familia</item>
+        <item>Otros</item>
         <item>Trabajo</item>
         <item>Amigos</item>
         <item>Estudios</item>
-        <item>Otros</item>
+        <item>Familia</item>
     </string-array>
 
 

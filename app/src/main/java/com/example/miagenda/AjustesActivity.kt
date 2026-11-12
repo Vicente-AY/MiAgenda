@@ -67,16 +67,7 @@ class AjustesActivity : AppCompatActivity() {
         val btnCancelar = findViewById<Button>(R.id.btnCancelSettings);
         btnCancelar.setOnClickListener {
 
-            val cancelDialogBuilder = AlertDialog.Builder(this);
-
-            cancelDialogBuilder.setMessage(R.string.message_alert)
-            .setPositiveButton(R.string.discard){ dialog, id ->
-                dialog.dismiss();
-                finish();
-            }
-            .setNegativeButton(R.string.cancel){dialog , id ->
-                dialog.dismiss();
-            }
+            finish();
         }
     }
 
