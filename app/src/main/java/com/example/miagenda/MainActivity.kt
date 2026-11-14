@@ -267,7 +267,7 @@ class MainActivity : AppCompatActivity() {
     private fun confirmarEliminarContacto(contacto: Contacto){
 
         val settings = getSharedPreferences("settings", MODE_PRIVATE);
-        val mostrarCuadro = settings.getBoolean("settings_remove", false)
+        val mostrarCuadro = settings.getBoolean("settings_remove", true)
 
         if(mostrarCuadro) {
             AlertDialog.Builder(this)

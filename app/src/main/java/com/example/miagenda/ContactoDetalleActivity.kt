@@ -125,7 +125,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
         btnDelete.setOnClickListener {
 
             val settings = getSharedPreferences("settings", MODE_PRIVATE);
-            val mostrarCuadro = settings.getBoolean("settings_remove", false)
+            val mostrarCuadro = settings.getBoolean("settings_remove", true)
 
             if (mostrarCuadro) {
 
@@ -154,13 +154,11 @@ class ContactoDetalleActivity : AppCompatActivity() {
 
         RepositoryProvider.get(this).eliminar(
             id,
-            onOk = { finish() },
+            onOk = {
+                finish()
+            },
             onError = { error ->
-                Toast.makeText(
-                    this,
-                    error,
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this,error,Toast.LENGTH_SHORT).show()
             }
         )
 
