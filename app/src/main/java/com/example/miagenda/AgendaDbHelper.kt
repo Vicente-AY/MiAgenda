@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", null, 3) {
+class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", null, 4) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE contactos (" +
@@ -23,6 +23,9 @@ class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", 
 
         if(oldVersion < 3){
             db.execSQL("ALTER TABLE contactos ADD COLUMN birthdate TEXT")
+        }
+        if (oldVersion < 4) {
+            db.execSQL("ALTER TABLE contactos DROP COLUMN birthday")
         }
 
 

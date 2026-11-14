@@ -22,12 +22,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.core.net.toUri
 import java.lang.System.out
 import androidx.core.content.edit
+import androidx.core.widget.doOnTextChanged
 import com.example.miagenda.RepositoryProvider
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ContactoAdapter
-    private var sortMode: String? = "";
+
     private val launcherForumlario = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         resultado ->
             if(resultado.resultCode == RESULT_OK){
@@ -113,7 +114,26 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        mostrarUltimoContacto()
+        val searchInput = findViewById<EditText>(R.id.search_input);
+
+        searchInput.doOnTextChanged { _, _, _, _ ->
+
+            buscar();
+
+        }
+
+        searchInput.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+
+            if(hasFocus){
+
+                searchInput.text.clear();
+
+            }
+
+        }
+
+        mostrarUltimoContacto();
+
     }
 
     private fun buscar(){
@@ -124,7 +144,6 @@ class MainActivity : AppCompatActivity() {
         val busqueda = findViewById<EditText>(R.id.search_input);
 
         val texto = busqueda.text.toString().trim();
-        busqueda.text.clear();
 
         progressBar.visibility = View.VISIBLE;
 
