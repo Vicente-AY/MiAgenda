@@ -1,36 +1,21 @@
-MiAgenda README
+MiAgenda 2.0 README
 
-En este proyecto se ha implementado una agenda telefonica. Tiene dos Activities. La Activity principal con los contactos añadidos, contador, ultimo contacto
-añadido y botones para ordenar, añadir o filtrar los contactos. La segunda Activity es un formulario para añadir los contactos con los botones de Aceptar y 
-Cancelar.
-
-Funcionalidades:
-Entre las funcionalidades de la agenda encontramos:
-    - Agregar contactos.
-    - Mostrar los contactos en un RecyclerView.
-    - Guardar en persistencia el ultimo contactoa añadido.
-    - Contador de los contactos totales.
-    - Abrir el marcador con un Intent implicito.
-    - Eliminar Contacto.
-    - Modificar Contacto.
-    - Enviar Email si el contacto tiene agregado uno.
-    - Ordenar por orden alfabético.
-    - Filtrar por favoritos.
+En este proyecto se ha mejorado MiAgenda añadiendole una pantalla de ajustes generales y una vista de detalles de los contactos. Se ha utilizado SQLite para la
+persistencia de los datos dado que, al tratarse de una aplicacion de gestion de contactos podemos obtener los datos de manera inmediata sin dependencia de 
+internet.
 
 Decisiones de Diseño:
-    - El MainActivity está compuesto por un ConstraintLayout y dividido por dos LinearLayout. Fué la decisión que tomé ante un primer acercamiento ante los xml 
-    para que estuvierta todo alineado.
-    - En un principio todos los contactos del RecylcerView iban a tener un boton para poder modificar su estado de favorito de manera inmediata. Lo descarté dado
-    que el usuario podria pulsar cualquiera de estos botones sin querer.
-    - La practica exige un onSaveInstanceState para guardar el estado de los interruptores. Dado que daba problemas y el estado se guardaba por si mismo decidí 
-    quitarlo.
+    - El MainActivity se le ha añadido un boton para acceder a AjustesActivity. El boton de ordenar alfabéticamente se ha eliminado dado que ya no respondia ante
+    ningún metodo.
+    - AjustesActivity tiene el contador por categoria. En un principio iba a ir dentro de MainActivity pero lo descarté para evitar saturar la actividad con 
+    información.
 
 Dificultades:
-    - Tardé mucho tiempo en acostumbrarme al diseño de las interfaces con xml. Lo solucioné buscando en Internet la sintaxis de lo que necesitaba y como se
-    comportaba la vista con esa funcion.
-    - No sabia como crear el RecyclerView ni como rellenarlo con contactos por lo que recurrí a herramientas de IA para poder implementarlo
+    - El cambio de ContactoRepository a RepositoryProvider junto a las diferentes clases para que la base de datos funcionara. El agente implementado
+    en Android Studio ayudó a entenderlas
+    - Las llamadas RepositoryProvider, con unos ejemplos encontrados en internet pude entender como funcionaba y replicarlas.
 
 Mejoras:
-    - Persistencia de datos dado que actualmente los Contactos se eliminan al cerrar la aplicación.
-    - Estructura de codigo. Al ser una primera practica el codigo es funcional pero empaquetado todo dentro de la propias activites. Haria una clase unicamente
-    de logica para estructurar mejor las funcionalidadesd de las Views.
+    - Imagen para el contacto.
+    - Poder añadir mas de un numero de telefono y email para cada contacto.
+    - Añadido de Categoria manual para no depender de las añadidas por defecto.

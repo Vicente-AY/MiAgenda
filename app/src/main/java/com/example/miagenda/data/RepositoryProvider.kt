@@ -1,4 +1,4 @@
-package com.example.miagenda
+package com.example.miagenda.data
 
 import android.content.Context
 

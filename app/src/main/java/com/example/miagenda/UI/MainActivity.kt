@@ -1,7 +1,6 @@
-package com.example.miagenda
+package com.example.miagenda.UI
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,10 +19,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.net.toUri
-import java.lang.System.out
 import androidx.core.content.edit
 import androidx.core.widget.doOnTextChanged
-import com.example.miagenda.RepositoryProvider
+import com.example.miagenda.R
+import com.example.miagenda.data.RepositoryProvider
+import com.example.miagenda.model.Contacto
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                     val notas = datos.getStringExtra("notas");
                     val cumple = datos.getStringExtra("cumple")
 
-                    val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
+                    val contacto =
+                        Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
 
                     RepositoryProvider.get(this).guardar(contacto, {
 

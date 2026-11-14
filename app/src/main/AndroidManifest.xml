@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiAgenda">
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ContactoFormActivity"
+            android:name=".UI.ContactoFormActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ContactoDetalleActivity"
+            android:name=".UI.ContactoDetalleActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".AjustesActivity"
+            android:name=".UI.AjustesActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

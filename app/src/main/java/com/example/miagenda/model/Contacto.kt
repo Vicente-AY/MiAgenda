@@ -1,6 +1,4 @@
-package com.example.miagenda
-
-import java.util.Date
+package com.example.miagenda.model
 
 data class Contacto(var id: String = "",
                     var name: String,
@@ -10,4 +8,4 @@ data class Contacto(var id: String = "",
                     var category: String = "Otros",
                     var notes: String? = null,
                     var birthdate: String? = null
-);
+)

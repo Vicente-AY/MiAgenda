@@ -1,10 +1,9 @@
-package com.example.miagenda
+package com.example.miagenda.UI
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.miagenda.R
+import com.example.miagenda.data.RepositoryProvider
+import com.example.miagenda.model.Contacto
 
 class ContactoDetalleActivity : AppCompatActivity() {
 
@@ -34,7 +36,8 @@ class ContactoDetalleActivity : AppCompatActivity() {
                 val notas = datos.getStringExtra("notas");
                 val cumple = datos.getStringExtra("cumple")
 
-                val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
+                val contacto =
+                    Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
 
                 RepositoryProvider.get(this).guardar(contacto, {
 
@@ -45,7 +48,8 @@ class ContactoDetalleActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.notes).text = notas;
                     findViewById<TextView>(R.id.birthdateDetail).text = cumple;
 
-                    if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(R.id.fav).text = getString(R.string.not_favourite);
+                    if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(
+                        R.id.fav).text = getString(R.string.not_favourite);
                     findViewById<Button>(R.id.btnEmail).isEnabled = !email.isNullOrEmpty();
                 },
                     { error ->

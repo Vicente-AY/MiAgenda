@@ -1,7 +1,6 @@
-package com.example.miagenda
+package com.example.miagenda.data
 
-import java.util.Locale
-import java.util.Locale.getDefault
+import com.example.miagenda.model.Contacto
 
 object ContactoRepository {
 

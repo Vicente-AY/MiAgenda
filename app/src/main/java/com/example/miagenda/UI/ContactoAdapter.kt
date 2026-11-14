@@ -1,13 +1,13 @@
-package com.example.miagenda
+package com.example.miagenda.UI
 
-import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.NonDisposableHandle.parent
+import com.example.miagenda.R
+import com.example.miagenda.model.Contacto
 
 class ContactoAdapter(
     private var contactos: List<Contacto>,

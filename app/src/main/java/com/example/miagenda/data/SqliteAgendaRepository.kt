@@ -1,8 +1,8 @@
-package com.example.miagenda
+package com.example.miagenda.data
 
 import android.content.ContentValues
 import android.content.Context
-import android.icu.text.MessagePattern
+import com.example.miagenda.model.Contacto
 
 class SqliteAgendaRepository(context: Context) : AgendaRepository {
 

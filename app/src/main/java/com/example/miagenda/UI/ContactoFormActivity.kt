@@ -1,4 +1,4 @@
-package com.example.miagenda
+package com.example.miagenda.UI
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.util.Calendar
-import android.widget.Toast
+import com.example.miagenda.R
 
 class ContactoFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,7 +126,7 @@ class ContactoFormActivity : AppCompatActivity() {
                         dialog.dismiss();
                         finish();
                     }
-                    .setNegativeButton(R.string.cancel){dialog , id ->
+                    .setNegativeButton(R.string.cancel){ dialog, id ->
                         dialog.dismiss();
                     }
 

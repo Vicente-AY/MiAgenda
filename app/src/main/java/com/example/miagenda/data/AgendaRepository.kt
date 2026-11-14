@@ -1,4 +1,6 @@
-package com.example.miagenda
+package com.example.miagenda.data
+
+import com.example.miagenda.model.Contacto
 
 interface AgendaRepository {
 

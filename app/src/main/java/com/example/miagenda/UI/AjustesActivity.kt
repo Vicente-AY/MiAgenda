@@ -1,6 +1,5 @@
-package com.example.miagenda
+package com.example.miagenda.UI
 
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.miagenda.R
+import com.example.miagenda.data.RepositoryProvider
 
 class AjustesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,7 @@ class AjustesActivity : AppCompatActivity() {
                     dialog.dismiss();
                     finish();
                 }
-                .setNegativeButton(R.string.cancel){dialog , id ->
+                .setNegativeButton(R.string.cancel){ dialog, id ->
                     dialog.dismiss();
                 }
 
