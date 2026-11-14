@@ -62,6 +62,146 @@
 
         />
 
+    <TextView
+        android:id="@+id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/summary"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remove_policy"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/work"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/work_count"
+        android:layout_marginTop="20dp"
+
+        />
+    <TextView
+        android:id="@+id/work_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/summary"
+        app:layout_constraintStart_toEndOf="@id/work"
+        />
+
+    <TextView
+        android:id="@+id/friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/friends"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/friends_count"
+        />
+    <TextView
+        android:id="@+id/friends_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/work"
+        app:layout_constraintStart_toEndOf="@id/friends"
+        />
+
+    <TextView
+        android:id="@+id/studies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/studies"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/studies_count"
+        />
+    <TextView
+        android:id="@+id/studies_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/friends"
+        app:layout_constraintStart_toEndOf="@id/studies"
+        />
+
+    <TextView
+        android:id="@+id/family"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/family"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/family_count"
+        />
+    <TextView
+        android:id="@+id/family_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/studies"
+        app:layout_constraintStart_toEndOf="@id/family"
+        />
+
+    <TextView
+        android:id="@+id/other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/other"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/other_count"
+        />
+    <TextView
+        android:id="@+id/other_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/family"
+        app:layout_constraintStart_toEndOf="@id/other"
+        />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total"
+        android:padding="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/total_count"
+        />
+    <TextView
+        android:id="@+id/total_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/other"
+        app:layout_constraintStart_toEndOf="@id/total"
+        />
+
     <Button
         android:id="@+id/btnSaveSettings"
         android:layout_width="wrap_content"
@@ -82,11 +222,22 @@
         android:layout_marginTop="40dp"
         android:text="@string/cancel"
         app:layout_constraintStart_toEndOf="@id/btnSaveSettings"
-        app:layout_constraintTop_toBottomOf="@+id/remove_policy"
+        app:layout_constraintTop_toBottomOf="@+id/total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         android:backgroundTint="@color/red"
         android:layout_marginStart="20dp"
+        />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 

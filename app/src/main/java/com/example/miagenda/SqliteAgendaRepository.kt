@@ -2,6 +2,7 @@ package com.example.miagenda
 
 import android.content.ContentValues
 import android.content.Context
+import android.icu.text.MessagePattern
 
 class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
@@ -42,7 +43,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
         }
         catch(e: Exception){
-            onError(e.message ?: "Error desconocido");
+            onError(e.message ?: "Error error al obtener contactos");
         }
 
     }
@@ -87,7 +88,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
         }
         catch(e: Exception) {
-            onError(e.message ?: "Error desconocido");
+            onError(e.message ?: "Error al buscar contacto");
         }
     }
 
@@ -126,7 +127,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
         }
         catch(e: Exception){
-            onError(e.message ?: "Error desconocido");
+            onError(e.message ?: "Error obtener contacto");
         }
 
     }
@@ -168,7 +169,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
         }
         catch(e: Exception){
-            onError(e.message ?: "Error desconocido");
+            onError(e.message ?: "Error al guardar");
         }
     }
 
@@ -187,7 +188,30 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
         }
         catch(e: Exception){
-            onError(e.message ?: "Error desconocido");
+            onError(e.message ?: "Error al eliminar");
+        }
+
+    }
+
+    override public fun obtenerNumeroDeContactosPorCategoria(categoria: String, onOk: (Int) -> Unit, onError: (String) -> Unit){
+
+        try{
+            val db = dbHelper.readableDatabase;
+            val sql = "SELECT COUNT(*) FROM contactos WHERE category = ?";
+
+            db.rawQuery(sql, arrayOf(categoria)).use { cursor ->
+
+                var total = 0;
+                if (cursor.moveToFirst()) {
+                    total = cursor.getInt(0);
+                }
+
+                onOk(total);
+            }
+
+        }
+        catch(e: Exception){
+            onError(e.message ?: "Error al obtener contactos por categoria");
         }
 
     }

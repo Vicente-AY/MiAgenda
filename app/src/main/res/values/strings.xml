@@ -110,9 +110,18 @@
     <string name="save">Guardar</string>
     <string name="save_settings_alert">Desea guardar los cambios?</string>
     <string name="save_settings">Guardar cambios</string>
+    <string name="summary">Resumen de contactos</string>
 
     <string-array name="contact_order">
         <item>Nombre</item>
         <item>Categoria</item>
     </string-array>
+
+    <string name="other">Otros: </string>
+    <string name="work">Trabajo: </string>
+    <string name="friends">Amigos: </string>
+    <string name="studies">Estudios: </string>
+    <string name="family">Familia: </string>
+    <string name="total">Total contactos: </string>
+
 </resources>

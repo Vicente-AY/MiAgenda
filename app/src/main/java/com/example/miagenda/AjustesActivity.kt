@@ -3,9 +3,13 @@ package com.example.miagenda
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ProgressBar
 import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -69,10 +73,109 @@ class AjustesActivity : AppCompatActivity() {
 
             finish();
         }
+
+        cargarResumen();
+
     }
 
+    private fun cargarResumen(){
+
+        val progressBar = findViewById<ProgressBar>(R.id.loading);
+        progressBar.visibility = View.VISIBLE;
+
+        RepositoryProvider.get(this).obtenerNumeroDeContactosPorCategoria("Otros",
+            onOk = { total ->
+
+                findViewById<TextView>(R.id.other_count).text = total.toString();
+
+            },
+            onError = { error ->
+
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+
+            }
+        );
+
+        RepositoryProvider.get(this).obtenerNumeroDeContactosPorCategoria("Trabajo",
+            onOk = { total ->
+
+                findViewById<TextView>(R.id.work_count).text = total.toString();
+
+            },
+            onError = { error ->
+
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+
+            }
+        );
+
+        RepositoryProvider.get(this).obtenerNumeroDeContactosPorCategoria("Amigos",
+            onOk = { total ->
+
+                findViewById<TextView>(R.id.friends_count).text = total.toString();
+
+            },
+            onError = { error ->
+
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+
+            }
+        );
+
+        RepositoryProvider.get(this).obtenerNumeroDeContactosPorCategoria("Estudios",
+            onOk = { total ->
+
+                findViewById<TextView>(R.id.studies_count).text = total.toString();
+
+            },
+            onError = { error ->
+
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+
+            }
+        );
+
+        RepositoryProvider.get(this).obtenerNumeroDeContactosPorCategoria("Familia",
+            onOk = { total ->
+
+                findViewById<TextView>(R.id.family_count).text = total.toString();
+
+            },
+            onError = { error ->
+
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+
+            }
+        );
+
+        RepositoryProvider.get(this).obtenerTodos(
+            onOk = { lista ->
+                val total = lista.size
+
+                if(lista.size <= 0){
+                    findViewById<TextView>(R.id.total_count).text = "0";
+                }
+                else{
+                    findViewById<TextView>(R.id.total_count).text = total.toString();
+                }
+            },
+            {mensaje ->
+                Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+
+            }
+        );
+
+        progressBar.visibility = View.GONE;
+
+    }
+
+
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "AjustesActivity: onStart") }
-    override fun onResume() { super.onResume(); Log.d("MiAgenda", "AjustesActivity: onResume") }
+    override fun onResume() {
+        super.onResume();
+        Log.d("MiAgenda", "AjustesActivity: onResume")
+        cargarResumen()
+    }
     override fun onPause() { super.onPause(); Log.d("MiAgenda", "AjustesActivity: onPause") }
     override fun onStop() { super.onStop(); Log.d("MiAgenda", "AjustesActivity: onStop") }
     override fun onDestroy() { super.onDestroy(); Log.d("MiAgenda", "AjustesActivity: onDestroy") }

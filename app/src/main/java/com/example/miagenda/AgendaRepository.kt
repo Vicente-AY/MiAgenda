@@ -12,4 +12,5 @@ interface AgendaRepository {
 
     fun eliminar(id: String, onOk: () -> Unit, onError: (String) -> Unit);
 
+    fun obtenerNumeroDeContactosPorCategoria(categoria: String, onOk: (Int) -> Unit, onError: (String) -> Unit);
 }

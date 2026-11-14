@@ -105,14 +105,6 @@ class MainActivity : AppCompatActivity() {
             refrescarLista();
         }
 
-        val btnOrdenar = findViewById<ToggleButton>(R.id.sort);
-
-        btnOrdenar.setOnClickListener {
-
-            refrescarLista()
-
-        }
-
         val btnBuscar = findViewById<Button>(R.id.search_button);
         btnBuscar.setOnClickListener {
 
@@ -191,11 +183,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun actualizarContador(){
 
+        val progressBar = findViewById<ProgressBar>(R.id.loading);
+
+        progressBar.visibility = View.VISIBLE;
+
         RepositoryProvider.get(this).obtenerTodos(onOk = { lista ->
+
+            progressBar.visibility = View.GONE;
             val total = lista.size
             findViewById<TextView>(R.id.contacts_count).text = total.toString()
         },
             {mensaje ->
+                progressBar.visibility = View.GONE;
                 Log.e("MiAgenda", "Error al actualizar contador: $mensaje")
 
             });
@@ -240,7 +239,6 @@ class MainActivity : AppCompatActivity() {
         );
 
     }
-
 
     private fun mostrarUltimoContacto(){
 
@@ -328,10 +326,7 @@ class MainActivity : AppCompatActivity() {
 
         startActivity(intent);
 
-
     }
-
-
 
     override fun onStart() { super.onStart(); Log.d("MiAgenda", "MainActivity: onStart") }
     override fun onResume() {
