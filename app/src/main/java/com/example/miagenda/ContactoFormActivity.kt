@@ -1,5 +1,6 @@
 package com.example.miagenda
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.util.Calendar
+import android.widget.Toast
 
 class ContactoFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +35,7 @@ class ContactoFormActivity : AppCompatActivity() {
         val campoFavorito = findViewById<CheckBox>(R.id.favourite)
         val campoCategoria = findViewById<Spinner>(R.id.category);
         val campoNotas = findViewById<EditText>(R.id.notes_input);
+        val campoCumple = findViewById<EditText>(R.id.birthdate_input);
 
         val id = intent.getStringExtra("id")
         if(!id.isNullOrEmpty() && savedInstanceState == null){
@@ -41,10 +45,18 @@ class ContactoFormActivity : AppCompatActivity() {
             campoFavorito.isChecked = intent.getBooleanExtra("favorito", false)
             campoCategoria.setSelection(resources.getStringArray(R.array.categories).indexOf(intent.getStringExtra("categoria")))
             campoNotas.setText(intent.getStringExtra("notas"))
+            campoCumple.setText(intent.getStringExtra("cumple"))
 
             findViewById<CheckBox>(R.id.favourite).isChecked = intent.getBooleanExtra("favorito", false)
             findViewById<TextView>(R.id.title).text = getString(R.string.edit_contact_form_title)
         }
+
+        campoCumple.setOnClickListener {
+
+            seleccionFecha()
+
+        }
+
         val btnAccept = findViewById<Button>(R.id.btnAccept);
         btnAccept.setOnClickListener {
 
@@ -54,6 +66,7 @@ class ContactoFormActivity : AppCompatActivity() {
             var favorito = campoFavorito.isChecked();
             var categoria = campoCategoria.selectedItem.toString();
             var notas = campoNotas.text.toString().trim();
+            var cumpleaños = campoCumple.text.toString().trim();
 
             var correctForm = true;
 
@@ -82,8 +95,9 @@ class ContactoFormActivity : AppCompatActivity() {
                 resultado.putExtra("telefono", telefono);
                 resultado.putExtra("email", email.ifEmpty { null });
                 resultado.putExtra("favorito", favorito);
-                resultado.putExtra("category", categoria);
-                resultado.putExtra("notes", notas.ifEmpty { null });
+                resultado.putExtra("categoria", categoria);
+                resultado.putExtra("notas", notas.ifEmpty { null });
+                resultado.putExtra("cumple", cumpleaños.ifEmpty { null });
 
                 setResult(RESULT_OK, resultado);
 
@@ -124,6 +138,26 @@ class ContactoFormActivity : AppCompatActivity() {
                 finish();
             }
         }
+    }
+
+    private fun seleccionFecha(){
+
+        val calendar = Calendar.getInstance();
+        val year = calendar.get(Calendar.YEAR);
+        val month = calendar.get(Calendar.MONTH);
+        val day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        val DatePickerDialog = DatePickerDialog(this,
+            {_, año, mes, dia ->
+
+                val fecha = "$dia/${mes + 1}/$año"
+
+                findViewById<EditText>(R.id.birthdate_input).setText(fecha);
+
+            }, year, month, day);
+
+        DatePickerDialog.show();
+
     }
 
     fun esTelefonoValido(telefono: String): Boolean{

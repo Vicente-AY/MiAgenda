@@ -23,6 +23,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                 val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
                 val categoryCol = cursor.getColumnIndexOrThrow("category");
                 val notasCol = cursor.getColumnIndexOrThrow("notes");
+                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
 
                 while (cursor.moveToNext()) {
                     val contacto = Contacto(
@@ -32,7 +33,8 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                         email = cursor.getString(emailCol),
                         favorite = cursor.getInt(favouriteCol) == 1,
                         category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol)
+                        notes = cursor.getString(notasCol),
+                        birthdate = cursor.getString(cumpleCol)
                     );
 
                     lista.add(contacto);
@@ -66,6 +68,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                 val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
                 val categoryCol = cursor.getColumnIndexOrThrow("category");
                 val notasCol = cursor.getColumnIndexOrThrow("notes");
+                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
 
                 while (cursor.moveToNext()) {
 
@@ -76,7 +79,8 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                         email = cursor.getString(emailCol),
                         favorite = cursor.getInt(favouriteCol) == 1,
                         category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol)
+                        notes = cursor.getString(notasCol),
+                        birthdate = cursor.getString(cumpleCol)
                     );
 
                     lista.add(contacto);
@@ -108,6 +112,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                 val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
                 val categoryCol = cursor.getColumnIndexOrThrow("category");
                 val notasCol = cursor.getColumnIndexOrThrow("notes");
+                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
 
                 if (cursor.moveToFirst()) {
 
@@ -118,7 +123,8 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                         email = cursor.getString(emailCol),
                         favorite = cursor.getInt(favouriteCol) == 1,
                         category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol)
+                        notes = cursor.getString(notasCol),
+                        birthdate = cursor.getString(cumpleCol)
                     );
                 }
             }
@@ -145,6 +151,7 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
                 put("favourite", contacto.favorite);
                 put("category", contacto.category);
                 put("notes", contacto.notes);
+                put("birthdate", contacto.birthdate)
             }
 
             if(contacto.id.isEmpty()){

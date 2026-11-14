@@ -39,10 +39,11 @@ class MainActivity : AppCompatActivity() {
                     val telefono = datos.getStringExtra("telefono") ?: "";
                     val email = datos.getStringExtra("email");
                     val favorito = datos.getBooleanExtra("favorito", false);
-                    val categoria = datos.getStringExtra("category") ?: "";
-                    val notas = datos.getStringExtra("notes");
+                    val categoria = datos.getStringExtra("categoria") ?: "";
+                    val notas = datos.getStringExtra("notas");
+                    val cumple = datos.getStringExtra("cumple")
 
-                    val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas);
+                    val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
 
                     RepositoryProvider.get(this).guardar(contacto, {
 
@@ -308,6 +309,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("favorito", contacto.favorite)
         intent.putExtra("categoria", contacto.category)
         intent.putExtra("notas", contacto.notes)
+        intent.putExtra("cumple", contacto.birthdate)
 
         launcherForumlario.launch(intent)
 
@@ -323,6 +325,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("favorito", contacto.favorite)
         intent.putExtra("categoria", contacto.category)
         intent.putExtra("notas", contacto.notes)
+        intent.putExtra("cumple", contacto.birthdate)
 
         startActivity(intent);
 

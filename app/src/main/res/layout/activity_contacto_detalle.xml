@@ -78,6 +78,26 @@
         android:layout_marginTop="10dp"
         />
 
+    <!-- Cumple -->
+    <TextView
+        android:id="@+id/birthdateLabel"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/birthdateDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/birthdateDetail"
+        />
+    <TextView
+        android:id="@+id/birthdateDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintStart_toEndOf="@id/emailLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:paddingStart="4dp"
+        />
+
     <!-- Categoria -->
     <TextView
         android:id="@+id/categoryLabel"
@@ -92,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/name_example"
-        app:layout_constraintTop_toBottomOf="@+id/emailLabel"
+        app:layout_constraintTop_toBottomOf="@+id/birthdateLabel"
         app:layout_constraintStart_toEndOf="@id/emailLabel"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"

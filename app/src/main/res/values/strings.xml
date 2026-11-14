@@ -90,9 +90,11 @@
     <!-- Titulo -->
     <string name="title_contact_detail">Detalle Contacto"</string>
     <!-- email -->
-    <string name="emailDetail">Email</string>
+    <string name="emailDetail">Email:</string>
+    <!--Cumple-->
+    <string name="birthdateDetail">Cumpleaños:</string>
     <!-- categoria -->
-    <string name="cagegory">Categoria</string>
+    <string name="cagegory">Categoria:</string>
 
     <string name="notes_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="is_favourite">Es contacto favorito</string>"

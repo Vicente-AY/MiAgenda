@@ -30,19 +30,22 @@ class ContactoDetalleActivity : AppCompatActivity() {
                 val telefono = datos.getStringExtra("telefono") ?: "";
                 val email = datos.getStringExtra("email");
                 favorito = datos.getBooleanExtra("favorito", false);
-                val categoria = datos.getStringExtra("category") ?: "";
-                val notas = datos.getStringExtra("notes");
+                val categoria = datos.getStringExtra("categoria") ?: "";
+                val notas = datos.getStringExtra("notas");
+                val cumple = datos.getStringExtra("cumple")
 
-                val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas);
+                val contacto = Contacto(id, nombre, telefono, email, favorito, categoria, notas, cumple);
 
                 RepositoryProvider.get(this).guardar(contacto, {
 
                     findViewById<TextView>(R.id.name).text = nombre;
                     findViewById<TextView>(R.id.phone).text = telefono;
                     findViewById<TextView>(R.id.email).text = email;
-                    if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(R.id.fav).text = getString(R.string.not_favourite);
                     findViewById<TextView>(R.id.category).text = categoria
                     findViewById<TextView>(R.id.notes).text = notas;
+                    findViewById<TextView>(R.id.birthdateDetail).text = cumple;
+
+                    if(favorito) findViewById<TextView>(R.id.fav).text = getString(R.string.is_favourite) else findViewById<TextView>(R.id.fav).text = getString(R.string.not_favourite);
                     findViewById<Button>(R.id.btnEmail).isEnabled = !email.isNullOrEmpty();
                 },
                     { error ->
@@ -69,6 +72,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
         val campoFavorito = findViewById<TextView>(R.id.fav);
         val campoCategoria = findViewById<TextView>(R.id.category);
         val campoNotas = findViewById<TextView>(R.id.notes);
+        val campoCumple = findViewById<TextView>(R.id.birthdateDetail);
 
         //id
         val id: String = intent.getStringExtra("id") ?: "";
@@ -91,6 +95,9 @@ class ContactoDetalleActivity : AppCompatActivity() {
 
         val notas = intent.getStringExtra("notas");
         campoNotas.setText(notas);
+
+        val cumpleaños = intent.getStringExtra("cumple");
+        campoCumple.setText(cumpleaños);
 
         //botones
         val btnCall = findViewById<Button>(R.id.btnCall);
@@ -118,6 +125,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
             intent.putExtra("favorito", favorito);
             intent.putExtra("categoria", campoCategoria.text.toString());
             intent.putExtra("notas", campoNotas.text.toString());
+            intent.putExtra("cumple", campoCumple.text.toString())
 
             launcherEditar.launch(intent);
         }
