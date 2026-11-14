@@ -48,6 +48,9 @@
     <!-- Email -->
     <string name="email">Email: (opcional)</string>
     <string name="email_example">name@mail.com</string>
+    <!-- birthdate-->
+    <string name="birthdate">Cumpleaños: (opcional)</string>
+    <string name="birthdate_example">22/06/1994</string>
 
     <!-- String de Toggle de favorito -->
     <string name="favourite">Favorito</string>

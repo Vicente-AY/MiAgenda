@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", null, 1) {
+class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", null, 2) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE contactos (" +
@@ -15,11 +15,17 @@ class AgendaDbHelper(context: Context) : SQLiteOpenHelper(context, "agenda.db", 
                 "email TEXT, " +
                 "favourite INTEGER, " +
                 "category TEXT NOT NULL, " +
-                "notes TEXT)")
+                "notes TEXT," +
+                "birthday DATE)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        //??
+
+        if(oldVersion < 2){
+            db.execSQL("ALTER TABLE contactos ADD COLUMN birthday DATE")
+        }
+
+
     }
 
     fun insertarContacto(name: String, phone: String, email: String?, favourite: Boolean, category: String, notes: String?): Long {

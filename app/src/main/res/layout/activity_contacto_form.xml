@@ -79,11 +79,32 @@
     />
 
     <TextView
+        android:id="@+id/birthdate"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/birthdate_input"
+        android:text="@string/birthdate"
+        android:textSize="12sp"
+        />
+    <EditText
+        android:id="@+id/birthdate_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="textEmailAddress"
+        android:hint="@string/birthdate_example"
+
+        />
+
+    <TextView
         android:id="@+id/noteLabel"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_input"
+        app:layout_constraintTop_toBottomOf="@id/birthdate_input"
         android:text="@string/notes"
         android:layout_marginTop="15dp"
         />
