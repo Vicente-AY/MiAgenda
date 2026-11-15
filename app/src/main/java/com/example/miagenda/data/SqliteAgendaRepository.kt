@@ -2,6 +2,7 @@ package com.example.miagenda.data
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import com.example.miagenda.model.Contacto
 
 class SqliteAgendaRepository(context: Context) : AgendaRepository {
@@ -16,26 +17,8 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
             db.query("contactos", null, null, null, null, null, null).use { cursor ->
 
-                val idCol = cursor.getColumnIndexOrThrow("id");
-                val nameCol = cursor.getColumnIndexOrThrow("name");
-                val phoneCol = cursor.getColumnIndexOrThrow("phone");
-                val emailCol = cursor.getColumnIndexOrThrow("email");
-                val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
-                val categoryCol = cursor.getColumnIndexOrThrow("category");
-                val notasCol = cursor.getColumnIndexOrThrow("notes");
-                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
-
                 while (cursor.moveToNext()) {
-                    val contacto = Contacto(
-                        id = cursor.getInt(idCol).toString(),
-                        name = cursor.getString(nameCol),
-                        phone = cursor.getString(phoneCol),
-                        email = cursor.getString(emailCol),
-                        favorite = cursor.getInt(favouriteCol) == 1,
-                        category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol),
-                        birthdate = cursor.getString(cumpleCol)
-                    );
+                    val contacto = getContacto(cursor)
 
                     lista.add(contacto);
                 }
@@ -61,30 +44,10 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
             db.query("contactos", null, busqueda, args, null, null, null).use { cursor ->
 
-                val idCol = cursor.getColumnIndexOrThrow("id");
-                val nameCol = cursor.getColumnIndexOrThrow("name");
-                val phoneCol = cursor.getColumnIndexOrThrow("phone");
-                val emailCol = cursor.getColumnIndexOrThrow("email");
-                val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
-                val categoryCol = cursor.getColumnIndexOrThrow("category");
-                val notasCol = cursor.getColumnIndexOrThrow("notes");
-                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
-
                 while (cursor.moveToNext()) {
-
-                    val contacto = Contacto(
-                        id = cursor.getInt(idCol).toString(),
-                        name = cursor.getString(nameCol),
-                        phone = cursor.getString(phoneCol),
-                        email = cursor.getString(emailCol),
-                        favorite = cursor.getInt(favouriteCol) == 1,
-                        category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol),
-                        birthdate = cursor.getString(cumpleCol)
-                    );
+                    val contacto = getContacto(cursor)
 
                     lista.add(contacto);
-
                 }
             }
 
@@ -105,27 +68,9 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
 
             db.query("contactos", null, "id = ?", arrayOf(id), null, null, null).use { cursor ->
 
-                val idCol = cursor.getColumnIndexOrThrow("id");
-                val nameCol = cursor.getColumnIndexOrThrow("name");
-                val phoneCol = cursor.getColumnIndexOrThrow("phone");
-                val emailCol = cursor.getColumnIndexOrThrow("email");
-                val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
-                val categoryCol = cursor.getColumnIndexOrThrow("category");
-                val notasCol = cursor.getColumnIndexOrThrow("notes");
-                val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
-
                 if (cursor.moveToFirst()) {
 
-                    contacto = Contacto(
-                        id = cursor.getInt(idCol).toString(),
-                        name = cursor.getString(nameCol),
-                        phone = cursor.getString(phoneCol),
-                        email = cursor.getString(emailCol),
-                        favorite = cursor.getInt(favouriteCol) == 1,
-                        category = cursor.getString(categoryCol),
-                        notes = cursor.getString(notasCol),
-                        birthdate = cursor.getString(cumpleCol)
-                    );
+                    contacto = getContacto(cursor);
                 }
             }
 
@@ -220,6 +165,32 @@ class SqliteAgendaRepository(context: Context) : AgendaRepository {
         catch(e: Exception){
             onError(e.message ?: "Error al obtener contactos por categoria");
         }
+
+    }
+
+    private fun getContacto(cursor: Cursor): Contacto {
+
+        val idCol = cursor.getColumnIndexOrThrow("id");
+        val nameCol = cursor.getColumnIndexOrThrow("name");
+        val phoneCol = cursor.getColumnIndexOrThrow("phone");
+        val emailCol = cursor.getColumnIndexOrThrow("email");
+        val favouriteCol = cursor.getColumnIndexOrThrow("favourite");
+        val categoryCol = cursor.getColumnIndexOrThrow("category");
+        val notasCol = cursor.getColumnIndexOrThrow("notes");
+        val cumpleCol = cursor.getColumnIndexOrThrow("birthdate");
+
+        val contacto = Contacto(
+            id = cursor.getInt(idCol).toString(),
+            name = cursor.getString(nameCol),
+            phone = cursor.getString(phoneCol),
+            email = cursor.getString(emailCol),
+            favorite = cursor.getInt(favouriteCol) == 1,
+            category = cursor.getString(categoryCol),
+            notes = cursor.getString(notasCol),
+            birthdate = cursor.getString(cumpleCol)
+        );
+
+        return contacto;
 
     }
 }
