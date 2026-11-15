@@ -256,6 +256,12 @@ class MainActivity : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.loading);
         progressBar.visibility = View.VISIBLE;
 
+        val busqueda = findViewById<EditText>(R.id.search_input);
+        if(busqueda.text != null){
+            buscar()
+            return;
+        }
+
         RepositoryProvider.get(this).obtenerTodos(
             onOk = { listaCompleta ->
 
