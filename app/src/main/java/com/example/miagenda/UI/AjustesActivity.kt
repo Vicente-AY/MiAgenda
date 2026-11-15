@@ -27,6 +27,7 @@ class AjustesActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        Log.d("MiAgenda", "AjustesActivity: onCreate")
 
         val order = findViewById<Spinner>(R.id.order);
         val eliminar = findViewById<CheckBox>(R.id.remove_policy);

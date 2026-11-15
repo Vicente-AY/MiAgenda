@@ -68,6 +68,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        Log.d("MiAgenda", "ContactoDetalleActivity: onCreate")
 
         //campos
         val campoNombre = findViewById<TextView>(R.id.name);
@@ -82,7 +83,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
         val id: String = intent.getStringExtra("id") ?: "";
 
         //datos
-        val nombre = intent.getStringExtra("nombre") ?: "";
+        var nombre = intent.getStringExtra("nombre") ?: "";
         campoNombre.setText(nombre)
 
         val telefono = intent.getStringExtra("telefono") ?: "";
@@ -136,6 +137,7 @@ class ContactoDetalleActivity : AppCompatActivity() {
 
         btnDelete.setOnClickListener {
 
+            nombre = campoNombre.text.toString().trim();
             val settings = getSharedPreferences("settings", MODE_PRIVATE);
             val mostrarCuadro = settings.getBoolean("settings_remove", true)
 

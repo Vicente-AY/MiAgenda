@@ -49,8 +49,12 @@ class MainActivity : AppCompatActivity() {
 
                     RepositoryProvider.get(this).guardar(contacto, {
 
-                        getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
-                            putString("ultimoContacto", nombre)
+                        if(id.isEmpty()){
+
+                            getSharedPreferences("miagendaprefs", MODE_PRIVATE).edit {
+                                putString("ultimoContacto", nombre)
+                            }
+
                         }
 
                         mostrarUltimoContacto();
@@ -73,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        Log.d("MiAgenda", "MainActivity: onCreate")
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerContacts);
         recycler.layoutManager = LinearLayoutManager(this);
@@ -86,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         val btnOpciones = findViewById<Button>(R.id.options);
         btnOpciones.setOnClickListener {
 
-            intent = Intent(this, AjustesActivity::class.java);
+            val intent = Intent(this, AjustesActivity::class.java);
             startActivity(intent);
 
         }
@@ -139,9 +144,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun buscar(){
 
+        val settings = getSharedPreferences("settings", MODE_PRIVATE);
+        val sortMode = settings.getString("settings_order", "")
+
         val progressBar = findViewById<ProgressBar>(R.id.loading);
 
-
+        val favoritos = findViewById<ToggleButton>(R.id.only_favourites);
         val busqueda = findViewById<EditText>(R.id.search_input);
 
         val texto = busqueda.text.toString().trim();
@@ -152,11 +160,26 @@ class MainActivity : AppCompatActivity() {
 
             RepositoryProvider.get(this).buscar(
                 texto, { lista ->
+
                     progressBar.visibility = View.GONE;
-                    adapter.actualizar(lista);
+
+                    var nuevaLista = lista;
+
+                    if(favoritos.isChecked){
+                        nuevaLista = lista.filter { it.favorite }
+                    }
+
+                    if(sortMode == "Nombre"){
+                        nuevaLista = nuevaLista.sortedBy { it.name.lowercase() }
+                    }
+                    else if(sortMode == "Categoria"){
+                        nuevaLista = nuevaLista.sortedBy { it.category.lowercase() }
+                    }
+
+                    adapter.actualizar(nuevaLista)
 
                 },
-                { error ->
+                {error ->
                     progressBar.visibility = View.GONE;
                     Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 }
