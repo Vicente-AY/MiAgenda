@@ -63,9 +63,10 @@ class MainActivity : AppCompatActivity() {
                     },
                     { error ->
                         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                    });
-                }
+                    }
+                );
             }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
