@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         val btnBuscar = findViewById<Button>(R.id.search_button);
         btnBuscar.setOnClickListener {
 
-            buscar();
+            refrescarLista();
 
         }
 
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
         searchInput.doOnTextChanged { _, _, _, _ ->
 
-            buscar();
+            refrescarLista();
 
         }
 
@@ -141,67 +141,6 @@ class MainActivity : AppCompatActivity() {
 
         mostrarUltimoContacto();
 
-    }
-
-    private fun buscar(){
-
-        val settings = getSharedPreferences("settings", MODE_PRIVATE);
-        val sortMode = settings.getString("settings_order", "")
-
-        val progressBar = findViewById<ProgressBar>(R.id.loading);
-
-        val favoritos = findViewById<ToggleButton>(R.id.only_favourites);
-        val busqueda = findViewById<EditText>(R.id.search_input);
-
-        val texto = busqueda.text.toString().trim();
-
-        progressBar.visibility = View.VISIBLE;
-
-        if (!texto.isEmpty()) {
-
-            RepositoryProvider.get(this).buscar(
-                texto, { lista ->
-
-                    progressBar.visibility = View.GONE;
-
-                    var nuevaLista = lista;
-
-                    if(favoritos.isChecked){
-                        nuevaLista = lista.filter { it.favorite }
-                    }
-
-                    if(sortMode == "Nombre"){
-                        nuevaLista = nuevaLista.sortedBy { it.name.lowercase() }
-                    }
-                    else if(sortMode == "Categoria"){
-                        nuevaLista = nuevaLista.sortedBy { it.category.lowercase() }
-                    }
-
-                    adapter.actualizar(nuevaLista)
-
-                },
-                {error ->
-                    progressBar.visibility = View.GONE;
-                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-                }
-            );
-        } else {
-
-            RepositoryProvider.get(this).obtenerTodos(
-                onOk = { lista ->
-
-                    progressBar.visibility = View.GONE;
-                    adapter.actualizar(lista);
-
-                },
-                onError = { error ->
-
-                    progressBar.visibility = View.GONE;
-                    Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-
-                }
-            );
-        }
     }
 
     private fun crearAdapter(): ContactoAdapter{
@@ -252,42 +191,63 @@ class MainActivity : AppCompatActivity() {
         val sortMode = settings.getString("settings_order", "")
 
         val soloFavoritos = findViewById<ToggleButton>(R.id.only_favourites);
+        val busqueda = findViewById<EditText>(R.id.search_input).text.toString().trim();
 
         val progressBar = findViewById<ProgressBar>(R.id.loading);
         progressBar.visibility = View.VISIBLE;
 
-        val busqueda = findViewById<EditText>(R.id.search_input);
-        if(busqueda.text != null){
-            buscar()
-            return;
+        var lista = emptyList<Contacto>();
+
+        if(busqueda.isEmpty()) {
+
+            RepositoryProvider.get(this).obtenerTodos(
+                onOk = { listaCompleta ->
+
+                    progressBar.visibility = View.GONE;
+                    lista = listaCompleta
+
+                },
+                onError = { error ->
+                    progressBar.visibility = View.GONE;
+                    Log.e("MiAgenda", "Error al refrescar lista: $error")
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+                }
+            );
+
+        }
+        else{
+
+            RepositoryProvider.get(this).buscar(
+                busqueda,
+                onOk = { listaCompleta ->
+
+                    progressBar.visibility = View.GONE;
+                    lista = listaCompleta;
+
+                },
+                onError = { error ->
+                    progressBar.visibility = View.GONE;
+                    Log.e("MiAgenda", "Error al refrescar lista: $error")
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+                }
+            );
+
         }
 
-        RepositoryProvider.get(this).obtenerTodos(
-            onOk = { listaCompleta ->
+        if(soloFavoritos.isChecked){
 
-                progressBar.visibility = View.GONE;
+            lista.filter { it.favorite }
 
-                var lista = listaCompleta
+        }
 
-                if (soloFavoritos.isChecked) {
-                    lista = lista.filter { it.favorite }
-                }
+        if(sortMode == "Nombre"){
+            lista = lista.sortedBy { it.name.lowercase() }
+        }
+        else if(sortMode == "Categoria"){
+            lista = lista.sortedBy { it.category.lowercase() }
+        }
 
-                if (sortMode == "Nombre") {
-                    lista = lista.sortedBy { it.name.lowercase() }
-                }
-                else if (sortMode == "Categoria"){
-                    lista = lista.sortedBy { it.category.lowercase() }
-                }
-
-                adapter.actualizar(lista)
-            },
-            onError = { error ->
-                progressBar.visibility = View.GONE;
-                Log.e("MiAgenda", "Error al refrescar lista: $error")
-                Toast.makeText(this, error, Toast.LENGTH_LONG).show()
-            }
-        );
+        adapter.actualizar(lista);
 
     }
 
